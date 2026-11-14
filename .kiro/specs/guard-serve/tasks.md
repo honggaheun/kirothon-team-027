@@ -17,7 +17,7 @@
 - [x] 5. `guard resolve` CLI
   - `<요구사항|all> <revert-code|edit-spec> [--root]`, 짧은 ID 해석(그 선택으로 기록할 수 있는 요구사항 중 하나만), `all` = 현재 red 전부, 종료 코드 0·1·64, stdout에 기록한 ID, 4의 함수 재사용
   - _Requirements: 5.1, 5.2_
-- [ ] 6. 손 확인
+- [x] 6. 손 확인
   - design의 손 확인 1~6은 사람이 저장소 루트의 자기 터미널에서 실행한다(resolve·`/api/resolve`가 든 명령 — 에이전트는 실행하지 않는다, guard-rules 14·20). 에이전트는 사람이 전한 결과를 기록한다
   - _Requirements: 1.1, 2.2, 2.3, 3.1, 4.1, 5.1_
 - [ ] 7. (선택 — 반례 재연, 핵심 기능이 모두 끝난 뒤) `POST /api/replay`
