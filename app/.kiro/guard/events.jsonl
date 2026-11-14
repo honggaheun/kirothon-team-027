@@ -1,0 +1,21 @@
+{"ts":"14:47:15","action":"hook","target":"guard check · 빨강 0 · 노랑 0 · 초록 2"}
+{"ts":"14:56:06","action":"hook","target":"guard check · 빨강 0 · 노랑 0 · 초록 2"}
+{"ts":"14:56:24","action":"human","target":"검사 봉인 · tests/tripwire/R1.1.prop.test.ts (notice-execution:R1.1)"}
+{"ts":"14:56:40","action":"hook","target":"guard check · 빨강 0 · 노랑 0 · 초록 2"}
+{"ts":"14:57:00","action":"human","target":"검사 봉인 · tests/tripwire/R2.1.prop.test.ts (notice-execution:R2.1)"}
+{"ts":"14:57:16","action":"hook","target":"guard check · 빨강 0 · 노랑 0 · 초록 2"}
+{"ts":"15:32:39","action":"hook","target":"guard check · 빨강 0 · 노랑 0 · 초록 2"}
+{"ts":"15:32:43","action":"shell","target":"node --version"}
+{"ts":"15:44:32","action":"hook","target":"guard check · 빨강 0 · 노랑 0 · 초록 2"}
+{"ts":"15:44:41","action":"write","target":"chaenggim/calendar_export.py"}
+{"ts":"15:44:51","action":"hook","target":"guard check · 빨강 0 · 노랑 0 · 초록 2"}
+{"ts":"15:44:55","action":"write","target":"tests/test_calendar_export.py"}
+{"ts":"15:44:55","action":"shell","target":".venv/Scripts/python.exe -X utf8 -m pytest tests/test_calendar_export.py"}
+{"ts":"15:45:05","action":"hook","target":"guard check · 빨강 0 · 노랑 0 · 초록 2"}
+{"ts":"15:45:10","action":"shell","target":".venv/Scripts/python.exe -X utf8 -m pytest tests/test_calendar_export.py"}
+{"ts":"16:19:11","action":"hook","target":"guard check · 빨강 0 · 노랑 0 · 초록 2"}
+{"ts":"16:19:15","action":"shell","target":"node --version"}
+{"ts":"16:52:38","action":"hook","target":"guard check · 빨강 0 · 노랑 0 · 초록 2"}
+{"ts":"16:52:41","action":"shell","target":"node --version"}
+{"ts":"17:09:15","action":"hook","target":"guard check · 빨강 0 · 노랑 0 · 초록 2"}
+{"ts":"17:09:18","action":"shell","target":"node --version"}

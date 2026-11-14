@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-11-14T17:09:15+09:00",
+  "overall": "green",
+  "requirements": [
+    {
+      "id": "notice-execution:R1.1",
+      "verdict": "green",
+      "reason": "all-passed",
+      "tests": [
+        {
+          "title": "[notice-execution:R1.1] 시작 날짜가 없는 event 일정은 등록 거절",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "notice-execution:R2.1",
+      "verdict": "green",
+      "reason": "all-passed",
+      "tests": [
+        {
+          "title": "[notice-execution:R2.1] 한국 시각 22:00 이상 또는 08:00 미만 알림은 등록 거절",
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "orphans": [],
+  "summary": {
+    "green": 2,
+    "yellow": 0,
+    "red": 0
+  },
+  "code": {
+    "file": "chaenggim/rules.py",
+    "lines": [
+      {
+        "n": 24,
+        "text": "if (item['kind']=='event' and not start) or (item.get('start') and not start) or (item.get('end') and (not end or not start or end<=start)): return no('R5.1')  # [notice-execution:R1.1]",
+        "links": [
+          "notice-execution:R1.1"
+        ]
+      },
+      {
+        "n": 30,
+        "text": "if not 8<=at.astimezone(KST).hour<22: return no('R8.1')  # [notice-execution:R2.1]",
+        "links": [
+          "notice-execution:R2.1"
+        ]
+      }
+    ]
+  },
+  "inputsHash": "sha256:3efb79a55e00c2c1fa77f49b0b62ba6f6a6cd17da1a216feb9706a3f0b4597ec"
+}

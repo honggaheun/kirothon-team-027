@@ -1,0 +1,63 @@
+{
+  "hooks": [
+    {
+      "name": "tripwire-gate-write",
+      "matcher": "write",
+      "timeout": 10,
+      "trigger": "PreToolUse",
+      "action": {
+        "command": "node .kiro/guard/bin/cli.js gate",
+        "type": "command"
+      }
+    },
+    {
+      "name": "tripwire-gate-shell",
+      "matcher": "shell",
+      "timeout": 10,
+      "trigger": "PreToolUse",
+      "action": {
+        "command": "node .kiro/guard/bin/cli.js gate",
+        "type": "command"
+      }
+    },
+    {
+      "name": "tripwire-check-write",
+      "matcher": "write",
+      "timeout": 60,
+      "trigger": "PostToolUse",
+      "action": {
+        "command": "node .kiro/guard/bin/cli.js check",
+        "type": "command"
+      }
+    },
+    {
+      "name": "tripwire-check-shell",
+      "matcher": "shell",
+      "timeout": 60,
+      "trigger": "PostToolUse",
+      "action": {
+        "command": "node .kiro/guard/bin/cli.js check --if-changed",
+        "type": "command"
+      }
+    },
+    {
+      "name": "tripwire-gate-task",
+      "action": {
+        "command": "node .kiro/guard/bin/cli.js gate",
+        "type": "command"
+      },
+      "timeout": 10,
+      "trigger": "PreTaskExec"
+    },
+    {
+      "name": "tripwire-session-summary",
+      "action": {
+        "command": "node .kiro/guard/bin/cli.js check --if-changed --summary",
+        "type": "command"
+      },
+      "timeout": 60,
+      "trigger": "SessionStart"
+    }
+  ],
+  "version": "v1"
+}

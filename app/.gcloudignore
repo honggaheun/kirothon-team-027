@@ -1,0 +1,17 @@
+.git
+.venv
+.data
+.env
+node_modules
+artifacts
+__pycache__
+.pytest_cache
+.pytest-tmp
+*.log
+src
+server.mjs
+tests
+docs
+.kiro
+mutants
+scripts

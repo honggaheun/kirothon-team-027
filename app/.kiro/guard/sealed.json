@@ -1,0 +1,26 @@
+{
+  "sealed": [
+    {
+      "path": "tests/tripwire/R1.1.prop.test.ts",
+      "sha256": "sha256:d324439c57cdce7384711638b3bb9d6a8a453611430fb1caa54c91595cbb1161",
+      "requirements": [
+        "notice-execution:R1.1"
+      ],
+      "textHashes": {
+        "notice-execution:R1.1": "sha256:54c7998927aee8f8367508d6f110891168364d1470f38d94b171f63698eeca6b"
+      },
+      "sealedAt": "2026-11-14T14:56:24+09:00"
+    },
+    {
+      "path": "tests/tripwire/R2.1.prop.test.ts",
+      "sha256": "sha256:806d03f993b2d12bfbcd0f74eedf0c7699914d2ce889c14c8a8edfa1f15dfaef",
+      "requirements": [
+        "notice-execution:R2.1"
+      ],
+      "textHashes": {
+        "notice-execution:R2.1": "sha256:8292eab26007dcd4d92eee79f607b3ef28f9d956172da6cb14af8afaff8e135d"
+      },
+      "sealedAt": "2026-11-14T14:57:00+09:00"
+    }
+  ]
+}

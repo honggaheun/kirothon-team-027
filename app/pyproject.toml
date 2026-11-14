@@ -1,0 +1,12 @@
+[project]
+name = "chaenggim"
+version = "0.1.0"
+description = "공지에서 일정과 준비 계획을 만드는 AI 에이전트"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+addopts = "-q --basetemp=.pytest-tmp"

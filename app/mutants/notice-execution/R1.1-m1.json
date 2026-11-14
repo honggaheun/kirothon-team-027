@@ -1,0 +1,7 @@
+{
+  "requirement": "notice-execution:R1.1",
+  "file": "chaenggim/rules.py",
+  "find": "(item['kind']=='event' and not start)",
+  "replace": "(item['kind']=='event' and item.get('start') and not start)",
+  "why": "start가 null인 event(kind=event, start=null, end=null, reminders=[])를 거절하지 않고 받아들여 R1.1을 어긴다"
+}

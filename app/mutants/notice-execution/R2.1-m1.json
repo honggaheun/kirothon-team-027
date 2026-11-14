@@ -1,0 +1,7 @@
+{
+  "requirement": "notice-execution:R2.1",
+  "file": "chaenggim/rules.py",
+  "find": "not 8<=at.astimezone(KST).hour<22",
+  "replace": "not 8<=at.astimezone(KST).hour<23",
+  "why": "한국 시각 22:00 알림(2026-11-20T22:00:00+09:00)을 받아들여 R2.1을 어긴다"
+}

@@ -1,0 +1,39 @@
+{
+  "labels": {
+    "app": "lero",
+    "purpose": "input-guard"
+  },
+  "filterConfig": {
+    "piAndJailbreakFilterSettings": {
+      "filterEnforcement": "ENABLED",
+      "confidenceLevel": "MEDIUM_AND_ABOVE"
+    },
+    "maliciousUriFilterSettings": {
+      "filterEnforcement": "DISABLED"
+    },
+    "sdpSettings": {
+      "basicConfig": {
+        "filterEnforcement": "DISABLED"
+      }
+    },
+    "csamFilterSettings": {
+      "filterEnforcement": "DISABLED"
+    }
+  },
+  "templateMetadata": {
+    "ignorePartialInvocationFailures": false,
+    "logTemplateOperations": false,
+    "logSanitizeOperations": false,
+    "enforcementType": "INSPECT_AND_BLOCK",
+    "multiLanguageDetection": {
+      "enableMultiLanguageDetection": true
+    },
+    "modalities": [
+      "MODALITY_TEXT",
+      "MODALITY_IMAGE"
+    ],
+    "filterVersionSelector": {
+      "alias": "FILTER_VERSION_ALIAS_STABLE"
+    }
+  }
+}

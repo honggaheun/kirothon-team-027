@@ -1,0 +1,12 @@
+{
+  "sourceGlobs": [
+    "chaenggim/**/*.py",
+    "web/**/*.js"
+  ],
+  "specsDir": ".kiro/specs",
+  "timeoutSeconds": 50,
+  "testDir": ".",
+  "testGlobs": [
+    "tests/tripwire/**/*.prop.test.ts"
+  ]
+}

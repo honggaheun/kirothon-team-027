@@ -1,0 +1,19 @@
+{
+  "specs": [
+    {
+      "spec": "notice-execution",
+      "requirements": [
+        {
+          "id": "R1.1",
+          "text": "WHEN 일정 종류가 event이고 시작 날짜가 확인되지 않아 start가 null인 경우 THEN 시스템은 그 일정의 등록을 거절해야 한다(SHALL).",
+          "textHash": "sha256:54c7998927aee8f8367508d6f110891168364d1470f38d94b171f63698eeca6b"
+        },
+        {
+          "id": "R2.1",
+          "text": "WHEN 알림의 한국 시각이 22:00 이상 또는 08:00 미만인 경우 THEN 시스템은 알림 등록을 거절해야 한다(SHALL).",
+          "textHash": "sha256:8292eab26007dcd4d92eee79f607b3ef28f9d956172da6cb14af8afaff8e135d"
+        }
+      ]
+    }
+  ]
+}
