@@ -34,7 +34,7 @@
 <tr>
 <td width="50%" valign="top">
 <h4>🗓️ LERO AI Agent — 공지 → 실행 계획 → 완료</h4>
-<img src="docs/media/lero-plan.jpg" width="100%" alt="LERO 공지 분석 화면 — 원문 근거와 일정·할 일 계획 검토"><br>
+<img src="docs/media/lero-login.jpg" width="100%" alt="LERO AI Agent 로그인 화면"><br>
 학교·회사·행사 공지를 넣으면 원문 근거와 준비 계획을 보여 준다. 선택·수정·명시적 승인 후 일정과 할 일을 만들고 완료까지 관리한다.<br><br>
 <b>위치</b> <code>app/chaenggim/</code> · <code>app/web/</code>
 </td>
@@ -78,6 +78,8 @@
 ## 2. 핵심 기능
 
 **LERO AI Agent — 공지 → 실행 계획 → 완료**
+
+<img src="docs/media/lero-plan.jpg" width="100%" alt="LERO AI Agent 서비스 화면 — 공지 분석, 원문 근거와 일정·할 일 계획 검토">
 
 | 기능 | 해결하는 불편 | 코드 위치 |
 |---|---|---|
