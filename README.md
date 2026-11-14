@@ -23,7 +23,7 @@
 
 | 데모 | 보여 주는 것 | 주소·영상 |
 |---|---|---|
-| 🗓️ **LERO** | 공지 → 근거·계획 검토 → 승인 → 일정·할 일 → 완료 | [서비스 열기](https://ai-hackathon.cloud) · [Cloud Run](https://chaenggim-411746044575.asia-northeast1.run.app) |
+| 🗓️ **LERO** | 공지 → 근거·계획 검토 → 승인 → 일정·할 일 → 완료 | [서비스 열기](https://ai-hackathon.cloud) |
 | 🛡️ **Tripwire** — Kiro Power | 기준을 어긴 저장 → 반례 → Kiro 차단 → 사람의 결정 → 복구 | [영상 보기](https://drive.google.com/file/d/1kThXh9NlS03dPeu2xSn-zYvGBL4IH7N_/view?usp=sharing) |
 
 > **데모 준비 완료:** 백엔드 검사 366개 통과. 공식 KIROTHON 시간대 9개와 할 일 2개를 분석하고 지난 준비 추천을 제외해 10개를 승인했다. Calendar 일괄 반영 9건 성공·0건 실패, 실제 0→9개 확인, 대화의 오늘 일정 9개·KST 시간 응답과 새로고침 후 대화 유지까지 검증했다. 검증용 9개 일정과 LERO 자료를 정리해 현재 시작 화면은 0건이며 로그인·연결·대화는 유지했다. [3분 데모 진행표](docs/DEMO.md).
