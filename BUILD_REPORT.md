@@ -29,13 +29,13 @@
 | 기획 | Specs (requirements, EARS) | guard를 스펙 4개로 나눴다 — guard-core(요구사항 4, 수용 기준 23), guard-check(9, 36), guard-serve(6, 22), stage-ui(10, 80). 수용 기준마다 ID(`R2.3`)를 붙여 검사·코드와 잇는다 | `.kiro/specs/*/requirements.md` |
 | 기획 | Steering | 제품 규칙·구조·기술·guard 규칙(봉인된 검사는 고치지 않는다, 기준을 조용히 약화하지 않는다)을 항상 적용되는 문서로 | `.kiro/steering/` |
 | 설계 | Specs (design) | 판정 규칙(빨강·노랑·초록), 데이터 계약(report.json·events.jsonl), hook 동작, 화면 배치를 설계 문서로 | `.kiro/specs/*/design.md` |
-| 구현 | Specs (tasks) + Kiro CLI 에이전트 | tasks.md의 작업을 Kiro가 구현했다 — guard-core 5.5분, guard-check 8.6분, guard-serve 12.3분, 화면 <!-- 분 --> (Claude Opus 5.5) | `guard/`, `ui/`, `.kiro/specs/*/tasks.md` |
+| 구현 | Specs (tasks) + Kiro CLI 에이전트 | tasks.md의 작업을 Kiro가 구현했다 — guard-core 5.5분, guard-check 8.6분, guard-serve 12.3분, 화면 58분(Claude Opus 5.5 high, guard-serve와 동시에 진행). 끝난 뒤 guard 자체 검사 175개가 모두 통과했다 | `guard/`, `ui/`, `.kiro/specs/*/tasks.md` |
 | 구현 | Kiro CLI 에이전트 | 예제 작업 공간의 가입 검증 코드(태그 줄 7개) | `demo/src/` |
 | 검증 | Specs (tasks) | Kiro가 guard-core·guard-check의 작업 17개를 코드·검사와 하나씩 대조해 15개를 완료로 표시하고, 검사가 빠진 2개(scan 종료 코드, check 잠금 시간)를 찾아 검사를 더한 뒤 표시했다. guard-serve도 같은 방법으로 검사 2개를 더했다 | `.kiro/specs/*/tasks.md`, `guard/test/` |
 | 검증 | Powers (property-tests · check-the-checks 스킬) | 예제의 수용 기준 6개마다 속성 검사를 만들고, 기준을 어긴 변형 13개를 모두 잡는지 확인한 뒤 사람이 봉인했다 | `demo/tests/`, `demo/mutants/`, `demo/.kiro/guard/sealed.json` |
 | 검증 | Steering | 검사를 만들던 Kiro가 "판정 함수 외의 코드를 import하지 않는다" 규칙에 걸려 멈추고, 가입 상태를 만드는 준비 함수를 써도 되는지 사람에게 물었다. 허용한 뒤 진행했다 | `.kiro/steering/guard-rules.md` |
 | 검증 | Hooks | 문지기(PreToolUse)와 쓰기 뒤 검사(PostToolUse)를 예제 작업 공간에 켰다 | `demo/.kiro/hooks/tripwire.json` |
-| 기타 | Powers | 파워를 묶어 레포 밖 작업 공간에 설치하고, setup 스킬로 hook·guard를 깔았다 <!-- 결과 --> | `power/tripwire/` |
+| 기타 | Powers | guard 빌드와 화면을 파워에 묶고, 레포 밖 새 작업 공간에 설치했다. Kiro가 setup 스킬로 guard를 `.kiro/guard/bin/`에 복사하고 hook 6개를 깔았다(2.0분). 이어서 쓰기 하나와 셸 명령을 시키자, 쓰기·셸마다 hook이 그 guard를 불러 기록을 남겼다 | `power/tripwire/` |
 | 기타 | Powers + Hooks | AI 에이전트 서비스에 Tripwire를 설치했다 <!-- 결과 --> | `app/.kiro/` |
 
 <!-- AI 에이전트 서비스의 기획·설계·구현·검증 행은 진행하며 더한다 -->
