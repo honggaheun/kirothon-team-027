@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tripwire · 스펙 실 화면</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="viewport">
+  <div id="stage" data-overall="none">
+    <!-- 활동 열·반례 띠 바탕(빛 웅덩이가 그 위에 깔리도록 맨 아래 층) -->
+    <div id="bg-panels" aria-hidden="true"><div class="bgp-act"></div><div class="bgp-band"></div></div>
+    <!-- 빛 웅덩이: 실·글자 판 아래 -->
+    <svg id="poolfx" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+    <!-- 실(요구사항↔코드 줄): 기본 실 → 끊긴 반쪽 → 실 밝힘 → 확인 표시 -->
+    <svg id="threads" viewBox="0 0 1920 1080" aria-hidden="true"><g class="dim"></g><g class="cut"></g><g class="glow"></g><g class="mk"></g></svg>
+
+    <header id="status">
+      <div class="brand"><span class="brand-mark">Tripwire</span><span class="brand-sub">스펙 실</span></div>
+      <div id="status-text">판정 없음 · guard check를 기다리는 중</div>
+      <div id="status-meta"><span id="status-phase"></span><span id="status-sum"></span></div>
+    </header>
+
+    <main id="middle">
+      <section id="spec">
+        <div class="col-head" id="head-req">요구사항 <span class="dim" id="req-path">.kiro/specs</span></div>
+        <div class="col-head" id="head-code">코드 <span class="dim" id="code-file"></span></div>
+        <div id="cards"></div>
+        <div id="code"></div>
+      </section>
+      <aside id="activity">
+        <div class="col-head">에이전트 활동 <span class="dim">events.jsonl</span></div>
+        <div id="act-lines"></div>
+        <div id="act-actions">
+          <button id="btn-revert" type="button" disabled>코드를 되돌린다</button>
+          <button id="btn-spec" type="button" disabled>스펙을 고친다</button>
+        </div>
+        <div id="toast" role="status"></div>
+      </aside>
+    </main>
+
+    <footer id="band">
+      <div id="band-head"><span id="band-title">반례 찾기</span><span id="band-info"></span><span id="band-legend"><b class="ok"><svg class="ico" viewBox="0 0 12 12" aria-label="통과"><path d="M1.5 6.5 L4.6 9.6 L10.5 2.6"/></svg></b>규칙대로 <b class="ng"><svg class="ico" viewBox="0 0 12 12" aria-label="실패"><path d="M2.2 2.2 L9.8 9.8 M9.8 2.2 L2.2 9.8"/></svg></b>규칙을 어김</span></div>
+      <div id="slots"></div>
+      <div id="shrink"></div>
+      <div id="band-foot"><span id="foot-inputs"></span><span id="foot-shrink"></span></div>
+    </footer>
+
+    <!-- 손전등 원뿔 빛: 목표 앞에서 흐려져 목표 글자 위에는 닿지 않는다 -->
+    <svg id="beamfx" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+    <!-- 도장과 지시선 -->
+    <svg id="stamps" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+    <!-- 칩·크루·검사관·손전등·표지판·말풍선·불꽃 -->
+    <svg id="fx" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+  </div>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
