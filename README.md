@@ -81,6 +81,8 @@
 
 <img src="docs/media/lero-plan.jpg" width="100%" alt="LERO AI Agent 서비스 화면 — 공지 분석, 원문 근거와 일정·할 일 계획 검토">
 
+<img src="docs/media/demo-calendar-chat.jpg" width="100%" alt="LERO AI Agent 채팅 화면 — 연결된 Google Calendar에서 오늘 일정 9개와 시간을 조회한 실제 결과">
+
 | 기능 | 해결하는 불편 | 코드 위치 |
 |---|---|---|
 | URL·텍스트·PNG·JPEG·PDF 입력 | 캡처·문서·웹 공지를 다시 타이핑하는 수고 | `app/chaenggim/intake.py`, `app/chaenggim/vertex.py` |
