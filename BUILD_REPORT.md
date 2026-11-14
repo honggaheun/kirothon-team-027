@@ -28,7 +28,7 @@
 
 | 단계 | 사용한 Kiro 기능 | 무엇을 했는지 | 결과물 위치 |
 |---|---|---|---|
-| 기획 | Specs (requirements, EARS) | guard를 스펙 4개로 나눴다 — guard-core(요구사항 4, 수용 기준 23), guard-check(9, 36), guard-serve(6, 22), stage-ui(10, 80). 수용 기준마다 ID(`R2.3`)를 붙여 검사·코드와 잇는다 | `.kiro/specs/*/requirements.md` |
+| 기획 | Specs (requirements, EARS) | guard를 스펙 4개로 나눴다 — guard-core(요구사항 4, 수용 기준 23), guard-check(9, 36), guard-serve(6, 22), stage-ui(10, 70) — 모두 151개. 수용 기준마다 ID(`R2.3`)를 붙여 검사·코드와 잇는다 | `.kiro/specs/*/requirements.md` |
 | 기획 | Steering | 제품 규칙·구조·기술·guard 규칙(봉인된 검사는 고치지 않는다, 기준을 조용히 약화하지 않는다)을 항상 적용되는 문서로 | `.kiro/steering/` |
 | 설계 | Specs (design) | 판정 규칙(빨강·노랑·초록), 데이터 계약(report.json·events.jsonl), hook 동작, 화면 배치를 설계 문서로 | `.kiro/specs/*/design.md` |
 | 구현 | Specs (tasks) + Kiro CLI 에이전트 | tasks.md의 작업을 Kiro가 구현했다 — guard-core 5.5분, guard-check 8.6분, guard-serve 12.3분, 화면 58분(Claude Opus 5.5 high, guard-serve와 동시에 진행). 끝난 뒤 guard 자체 검사 175개가 모두 통과했다 | `guard/`, `ui/`, `.kiro/specs/*/tasks.md` |
