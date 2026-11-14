@@ -14,19 +14,26 @@
   <a href="#1-문제-정의">문제 정의</a> ·
   <a href="#2-핵심-기능">핵심 기능</a> ·
   <a href="#3-사용-시나리오">사용 시나리오</a> ·
+  <a href="#5-차별점">차별점</a><br>
   <a href="#6-설치와-실행">설치와 실행</a> ·
+  <a href="#7-테스트">테스트</a> ·
   <a href="#kiro-power--tripwire">Kiro Power</a> ·
   <a href="BUILD_REPORT.md">BUILD REPORT</a>
 </p>
 
-**Demo:** [LERO AI Agent 배포 서비스](https://ai-hackathon.cloud)
+<p align="center"><strong>Demo:</strong> <a href="https://ai-hackathon.cloud">LERO AI Agent 배포 서비스</a></p>
 
 | 데모 | 보여 주는 것 | 주소·영상 |
 |---|---|---|
 | 🗓️ **LERO AI Agent** | 공지 → 근거·계획 검토 → 승인 → 일정·할 일 → 완료 | [서비스 열기](https://ai-hackathon.cloud) |
 | 🛡️ **Tripwire** — Kiro Power | 기준을 어긴 저장 → 반례 → Kiro 차단 → 사람의 결정 → 복구 | [영상 보기](https://drive.google.com/file/d/1kThXh9NlS03dPeu2xSn-zYvGBL4IH7N_/view?usp=sharing) |
 
+<details>
+<summary><strong>데모 준비 상태 · 검증 기록</strong></summary>
+
 > **데모 준비 완료:** 백엔드 검사 366개 통과. 공식 KIROTHON 시간대 9개와 할 일 2개를 분석하고 지난 준비 추천을 제외해 10개를 승인했다. Calendar 일괄 반영 9건 성공·0건 실패, 실제 0→9개 확인, 대화의 오늘 일정 9개·KST 시간 응답과 새로고침 후 대화 유지까지 검증했다. 검증용 9개 일정과 LERO 자료를 정리해 현재 시작 화면은 0건이며 로그인·연결·대화는 유지했다. [3분 데모 진행표](docs/DEMO.md).
+
+</details>
 
 ### 이 레포에 담긴 두 가지
 
@@ -79,9 +86,18 @@
 
 **LERO AI Agent — 공지 → 실행 계획 → 완료**
 
-<img src="docs/media/lero-plan.jpg" width="100%" alt="LERO AI Agent 서비스 화면 — 공지 분석, 원문 근거와 일정·할 일 계획 검토">
-
-<img src="docs/media/demo-calendar-chat.jpg" width="100%" alt="LERO AI Agent 채팅 화면 — 연결된 Google Calendar에서 오늘 일정 9개와 시간을 조회한 실제 결과">
+<table>
+<tr>
+<td width="50%" align="center" valign="top">
+<b>공지 분석 · 계획 검토</b><br><br>
+<a href="docs/media/lero-plan.jpg"><img src="docs/media/lero-plan.jpg" width="420" alt="LERO AI Agent 서비스 화면 — 공지 분석, 원문 근거와 일정·할 일 계획 검토"></a>
+</td>
+<td width="50%" align="center" valign="top">
+<b>홈 화면 채팅창</b><br><br>
+<a href="docs/media/lero-demo-ready.jpg"><img src="docs/media/lero-demo-ready.jpg" width="420" alt="LERO AI Agent 홈 화면 — 오늘 챙길 일과 상단 채팅 입력창"></a>
+</td>
+</tr>
+</table>
 
 | 기능 | 해결하는 불편 | 코드 위치 |
 |---|---|---|
@@ -171,6 +187,9 @@ python -m venv .venv
 
 [로컬 화면](http://127.0.0.1:4871)을 연다. `--demo`는 로컬 체험 계정만 제공한다. 실제 분석과 Google 서비스 사용에는 아래 설정이 필요하다. macOS·Linux에서는 `.venv\Scripts\python.exe` 대신 `.venv/bin/python`을 사용한다.
 
+<details>
+<summary><strong>실행 환경 설정 보기</strong></summary>
+
 | 설정 | 용도 |
 |---|---|
 | `APP_ORIGIN` | 로컬 기본값 `http://127.0.0.1:4871`. OAuth 리디렉션 URI는 같은 origin의 `/auth/callback` |
@@ -181,6 +200,8 @@ python -m venv .venv
 | `SOURCE_BUCKET` | Cloud Run에서 첨부를 보관하는 비공개 Cloud Storage 버킷 |
 
 설정은 `app/.env` 또는 실행 환경에 둔다. 비밀 값, `.env`, 로컬 키와 사용자 데이터는 커밋하지 않는다. Cloud Run에서는 서비스 계정·Firestore·비공개 Cloud Storage를 사용하며, 로컬에서는 SQLite를 사용한다.
+
+</details>
 
 ## 7. 테스트
 
@@ -201,6 +222,9 @@ npm test
 ```
 
 Python 검사는 계획 승인·소유권·입력 제한·서비스 어댑터·계정 처리 등을 확인한다. `npm test`의 속성 검사는 TypeScript의 판정 복제본 대신 실제 Python `rules.check`를 호출한다. 봉인된 검사는 수정하지 않는다.
+
+<details>
+<summary><strong>검증 결과와 증거 화면 펼치기</strong></summary>
 
 | 확인 범위 | 현재 근거 |
 |---|---|
@@ -223,6 +247,8 @@ Python 검사는 계획 승인·소유권·입력 제한·서비스 어댑터·�
 | 검증 범위의 한계 | 실제 메일 선택적 분류, LERO의 위반 후 작업 차단은 별도 확인. Model Armor 앱 정상 입력 ALLOW는 확인했으며 프로덕션 공격 UI 차단 성공으로 확장하지 않음 |
 
 증거 화면: [분석 계획](docs/media/lero-plan.jpg) · [Calendar 검증 전](docs/media/demo-calendar-before.jpg) · [9개 반영 후](docs/media/demo-calendar-after.jpg) · [오늘 일정 대화](docs/media/demo-calendar-chat.jpg) · [정리 후 시작 화면](docs/media/lero-demo-ready.jpg)
+
+</details>
 
 Google OAuth는 외부 사용자용 프로덕션으로 공개했으며 기본 로그인을 제공한다. 추가 서비스 권한의 Google 검증이 끝났다는 뜻은 아니다. 민감한 권한은 계정·권한에 따라 Google의 경고나 접근 제한이 적용될 수 있다.
 
