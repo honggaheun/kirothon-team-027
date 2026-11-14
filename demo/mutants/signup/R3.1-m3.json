@@ -1,0 +1,7 @@
+{
+  "requirement": "signup:R3.1",
+  "file": "src/signup/validate.ts",
+  "find": "- (birthdayPassed ? 0 : 1)",
+  "replace": "- 0",
+  "why": "생일이 아직 안 지난 만 13세(생년월일 2012-11-15, today 2026-11-14)를 만 14세로 세어 동의 없이 받아들여 R3.1을 어긴다"
+}

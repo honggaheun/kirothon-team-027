@@ -1,0 +1,7 @@
+{
+  "requirement": "signup:R1.2",
+  "file": "src/signup/validate.ts",
+  "find": "if (isRegistered(input.email))",
+  "replace": "if (isRegistered(input.email) && input.email.length <= 20)",
+  "why": "21자 이상의 이미 가입된 이메일 aaaaaaaaaaaa@bbbbbbbb.com을 받아들여 R1.2를 어긴다"
+}

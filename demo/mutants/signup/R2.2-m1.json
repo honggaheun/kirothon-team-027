@@ -1,0 +1,7 @@
+{
+  "requirement": "signup:R2.2",
+  "file": "src/signup/validate.ts",
+  "find": "!/\\d/.test(pw)",
+  "replace": "!/[^a-z]/i.test(pw)",
+  "why": "숫자 없이 영문자와 기호가 든 비밀번호 abcdefg!를 받아들여 R2.2를 어긴다(기호를 숫자로 침)"
+}

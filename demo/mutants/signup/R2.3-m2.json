@@ -1,0 +1,7 @@
+{
+  "requirement": "signup:R2.3",
+  "file": "src/signup/validate.ts",
+  "find": "MIN_PASSWORD_LENGTH = 8;",
+  "replace": "MIN_PASSWORD_LENGTH = 6;",
+  "why": "6자 비밀번호 abcde1을 받아들여 R2.3을 어긴다"
+}

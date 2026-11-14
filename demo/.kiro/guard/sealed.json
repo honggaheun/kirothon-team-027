@@ -1,0 +1,70 @@
+{
+  "sealed": [
+    {
+      "path": "tests/signup/R1.1.prop.test.ts",
+      "sha256": "sha256:93eb7ef5c39456ddcccffdda64c18d47e6344deca0aec6d5426a329608f2e400",
+      "requirements": [
+        "signup:R1.1"
+      ],
+      "textHashes": {
+        "signup:R1.1": "sha256:0ebd1eb9b3a5c5282579348066735c11ba8712bebb60191d12e55a24c3297c4f"
+      },
+      "sealedAt": "2026-11-14T12:19:00+09:00"
+    },
+    {
+      "path": "tests/signup/R1.2.prop.test.ts",
+      "sha256": "sha256:0ed192328953ad164887866e6507a079f7d37abbd7e5d64b7aaa64e4a7a34c25",
+      "requirements": [
+        "signup:R1.2"
+      ],
+      "textHashes": {
+        "signup:R1.2": "sha256:377265f81712277967829c74f06a994eefd9325ecc938ccf0fcf3eaefe4df44c"
+      },
+      "sealedAt": "2026-11-14T12:19:06+09:00"
+    },
+    {
+      "path": "tests/signup/R2.1.prop.test.ts",
+      "sha256": "sha256:10fe88b81c892190ef1ab90e389c657e48bf24a1f928f877d031723a1c8b98f6",
+      "requirements": [
+        "signup:R2.1"
+      ],
+      "textHashes": {
+        "signup:R2.1": "sha256:fcb2987c5eac02d1353128f347285186a690b450d54ea23586b2040acf93feea"
+      },
+      "sealedAt": "2026-11-14T12:19:10+09:00"
+    },
+    {
+      "path": "tests/signup/R2.2.prop.test.ts",
+      "sha256": "sha256:95caa1444ddaff00b597d205b168b64efb46b7cc202ab7a928bda898b911e649",
+      "requirements": [
+        "signup:R2.2"
+      ],
+      "textHashes": {
+        "signup:R2.2": "sha256:3ed592500104927964ebd4eb830824ed4761f1274a458c91f4e1ba5955faea04"
+      },
+      "sealedAt": "2026-11-14T12:19:14+09:00"
+    },
+    {
+      "path": "tests/signup/R2.3.prop.test.ts",
+      "sha256": "sha256:3d782543261e5711cccbab05c17288309ced2b350f17c365243ff15da6040c7b",
+      "requirements": [
+        "signup:R2.3"
+      ],
+      "textHashes": {
+        "signup:R2.3": "sha256:e5441aeb98e65ccaf026bc70d5349eb981e0466f1794f3beab5822bd702d4f89"
+      },
+      "sealedAt": "2026-11-14T12:19:19+09:00"
+    },
+    {
+      "path": "tests/signup/R3.1.prop.test.ts",
+      "sha256": "sha256:12af74afa784075d982c516692f9812db4ded0eac523165f4812c0a23c5b73d7",
+      "requirements": [
+        "signup:R3.1"
+      ],
+      "textHashes": {
+        "signup:R3.1": "sha256:5aadf75836c05ffab4ab907752780f1c0c25d1b7b8997e1fc4a72db4044e7b33"
+      },
+      "sealedAt": "2026-11-14T12:19:24+09:00"
+    }
+  ]
+}

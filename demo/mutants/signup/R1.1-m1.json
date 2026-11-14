@@ -1,0 +1,7 @@
+{
+  "requirement": "signup:R1.1",
+  "file": "src/signup/validate.ts",
+  "find": "!input.email.includes('@')",
+  "replace": "input.email.length > 0 && !input.email.includes('@')",
+  "why": "빈 문자열 이메일 ''을 받아들여 R1.1을 어긴다(@가 없는 이메일)"
+}
