@@ -4,8 +4,8 @@
   "version": "0.1.0",
   "description": "Kiro 스펙의 EARS 수용 기준을 fast-check 속성 검사로 바꾸고, 기준을 어긴 변형 구현으로 그 검사를 검사해 봉인한 뒤, 코드나 자율 에이전트가 스펙을 벗어나면 최소 반례로 잡아 에이전트의 쓰기를 멈추고 사람에게 '코드를 되돌린다 / 스펙을 고친다'를 고르게 합니다. Turns EARS acceptance criteria into property-based tests, tests those tests with mutants, and stops agent writes on spec drift.",
   "author": { "name": "honggaheun", "url": "https://github.com/honggaheun" },
-  "homepage": "https://github.com/honggaheun/Tripwire",
-  "repository": "https://github.com/honggaheun/Tripwire",
+  "homepage": "https://github.com/honggaheun/kirothon-team-027",
+  "repository": "https://github.com/honggaheun/kirothon-team-027",
   "license": "MIT",
   "keywords": [
     "spec drift",
