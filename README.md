@@ -8,7 +8,12 @@
 
 <p align="center">KIROTHON 2026 출품작 · team-027</p>
 
-**Demo:** <!-- 데모 영상 링크(YouTube 일부 공개) -->
+**Demo:**
+
+| 데모 | 영상 |
+|---|---|
+| AI 에이전트 — 캡처한 공지를 일정과 할 일로 | <!-- AI 에이전트 데모 영상 링크 --> |
+| Kiro Power — Tripwire (기준을 어긴 저장 → 반례 → Kiro 차단 → 사람의 결정 → 복구) | [영상 보기](https://drive.google.com/file/d/1kThXh9NlS03dPeu2xSn-zYvGBL4IH7N_/view?usp=sharing) |
 
 이 레포에는 두 가지가 들어 있다.
 
@@ -116,7 +121,7 @@ cd demo && npx vitest run # 예제의 봉인된 속성 검사 6개
 
 Kiro 스펙의 수용 기준(EARS)을 fast-check 속성 검사로 실행해, 코드나 자율 에이전트가 스펙을 벗어나는 순간 반례로 잡는 Kiro 파워다. 판정은 코드가 하고, 결정은 사람이 한다. `guard serve` 화면에서는 검사관이 수용 기준과 코드 줄을 잇는 실을 따라 순찰한다.
 
-<!-- 데모 영상 링크 -->
+**데모 영상:** [Tripwire가 스펙 위반을 잡고 Kiro를 막는 과정](https://drive.google.com/file/d/1kThXh9NlS03dPeu2xSn-zYvGBL4IH7N_/view?usp=sharing)
 
 <table>
 <tr>
