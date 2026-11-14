@@ -1,4 +1,4 @@
-# LERO
+# LERO AI Agent
 
 받은 공지를 근거가 있는 준비 계획으로 바꾸고, 확인한 일정과 할 일을 실행하는 웹 에이전트다. FastAPI/Python 서버와 브라우저 JavaScript 화면으로 구성했다. 배포 주소: https://ai-hackathon.cloud
 

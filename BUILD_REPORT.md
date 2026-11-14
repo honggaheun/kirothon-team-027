@@ -1,6 +1,6 @@
 # BUILD REPORT
 
-이 레포에는 공지를 실행 계획으로 바꾸는 **LERO**와, 개발 중 스펙 위반을 속성 검사로 찾는 **Kiro Power Tripwire**가 담겨 있다. Kiro CLI는 LERO의 `notice-execution` 스펙, 실제 Python 판정을 호출하는 속성 검사와 변형 구현, ICS 내보내기 기능을 만드는 데 사용했다. LERO의 API·인증·화면·외부 서비스 연동과 나머지 앱 구현·배포는 Codex가 담당했다. 설정·봉인 실행도 사용자의 명시적 위임 아래 Codex가 진행했다. 아래에 Kiro를 사용한 단계와 확인한 결과를 구체적으로 기록한다.
+이 레포에는 공지를 실행 계획으로 바꾸는 **LERO AI Agent**와, 개발 중 스펙 위반을 속성 검사로 찾는 **Kiro Power Tripwire**가 담겨 있다. Kiro CLI는 LERO의 `notice-execution` 스펙, 실제 Python 판정을 호출하는 속성 검사와 변형 구현, ICS 내보내기 기능을 만드는 데 사용했다. LERO의 API·인증·화면·외부 서비스 연동과 나머지 앱 구현·배포는 Codex가 담당했다. 설정·봉인 실행도 사용자의 명시적 위임 아래 Codex가 진행했다. 아래에 Kiro를 사용한 단계와 확인한 결과를 구체적으로 기록한다.
 
 ---
 
@@ -35,7 +35,7 @@
 | 검증 | Steering | 검사를 만들던 Kiro가 "판정 함수 외의 코드를 import하지 않는다" 규칙에 걸려 멈추고, 가입 상태를 만드는 준비 함수를 써도 되는지 사람에게 물었다. 허용한 뒤 진행했다 | `.kiro/steering/guard-rules.md` |
 | 검증 | Hooks | 문지기(PreToolUse)와 쓰기 뒤 검사(PostToolUse)를 예제 작업 공간에 켰다. 사람이 비밀번호 최소 길이를 8에서 6으로 저장하자 수 초 안에 R2.3이 빨강이 됐고, 검사를 돌리려던 Kiro의 셸 실행이 막혔다. 사람이 '코드를 되돌린다'를 고르자 Kiro가 코드를 되돌렸고, 쓰기 뒤 검사가 초록으로 바꾸며 해결이 닫혔다 | `demo/.kiro/hooks/tripwire.json` |
 | 기타 | Powers | guard 빌드와 화면을 파워에 묶고, 레포 밖 새 작업 공간에 설치했다. Kiro가 setup 스킬로 guard를 `.kiro/guard/bin/`에 복사하고 hook 6개를 깔았다(2.0분). 이어서 쓰기 하나와 셸 명령을 시키자, 쓰기·셸마다 hook이 그 guard를 불러 기록을 남겼다 | `power/tripwire/` |
-### LERO — 공지에서 실행 계획과 완료까지
+### LERO AI Agent — 공지에서 실행 계획과 완료까지
 
 | 단계 | 사용한 Kiro 기능 | 무엇을 했는지 | 결과물 위치 |
 |---|---|---|---|

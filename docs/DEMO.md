@@ -1,4 +1,4 @@
-# LERO 3분 데모 — KIROTHON 당일 전체 시간표
+# LERO AI Agent 3분 데모 — KIROTHON 당일 전체 시간표
 
 [서비스 열기](https://ai-hackathon.cloud) · [검증 상태](../README.md#7-테스트)
 

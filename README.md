@@ -1,4 +1,4 @@
-<h1 align="center">LERO — 공지를 다음 행동으로<br><sub>실행 에이전트 + Kiro Power Tripwire</sub></h1>
+<h1 align="center">LERO AI Agent — 공지를 다음 행동으로<br><sub>공지 실행 에이전트 + Kiro Power Tripwire</sub></h1>
 
 <p align="center">캡처·문서·메일 공지를 근거가 있는 실행 계획으로 바꾸고, 승인부터 완료까지 이어 간다.<br>
 그 판정 코드의 스펙을 지키기 위해 Kiro 파워 Tripwire를 실제 Python 서버에 적용했다.</p>
@@ -19,11 +19,11 @@
   <a href="BUILD_REPORT.md">BUILD REPORT</a>
 </p>
 
-**Demo:** [LERO 배포 서비스](https://ai-hackathon.cloud)
+**Demo:** [LERO AI Agent 배포 서비스](https://ai-hackathon.cloud)
 
 | 데모 | 보여 주는 것 | 주소·영상 |
 |---|---|---|
-| 🗓️ **LERO** | 공지 → 근거·계획 검토 → 승인 → 일정·할 일 → 완료 | [서비스 열기](https://ai-hackathon.cloud) |
+| 🗓️ **LERO AI Agent** | 공지 → 근거·계획 검토 → 승인 → 일정·할 일 → 완료 | [서비스 열기](https://ai-hackathon.cloud) |
 | 🛡️ **Tripwire** — Kiro Power | 기준을 어긴 저장 → 반례 → Kiro 차단 → 사람의 결정 → 복구 | [영상 보기](https://drive.google.com/file/d/1kThXh9NlS03dPeu2xSn-zYvGBL4IH7N_/view?usp=sharing) |
 
 > **데모 준비 완료:** 백엔드 검사 366개 통과. 공식 KIROTHON 시간대 9개와 할 일 2개를 분석하고 지난 준비 추천을 제외해 10개를 승인했다. Calendar 일괄 반영 9건 성공·0건 실패, 실제 0→9개 확인, 대화의 오늘 일정 9개·KST 시간 응답과 새로고침 후 대화 유지까지 검증했다. 검증용 9개 일정과 LERO 자료를 정리해 현재 시작 화면은 0건이며 로그인·연결·대화는 유지했다. [3분 데모 진행표](docs/DEMO.md).
@@ -33,7 +33,7 @@
 <table>
 <tr>
 <td width="50%" valign="top">
-<h4>🗓️ LERO — 공지 → 실행 계획 → 완료</h4>
+<h4>🗓️ LERO AI Agent — 공지 → 실행 계획 → 완료</h4>
 <img src="docs/media/lero-plan.jpg" width="100%" alt="LERO 공지 분석 화면 — 원문 근거와 일정·할 일 계획 검토"><br>
 학교·회사·행사 공지를 넣으면 원문 근거와 준비 계획을 보여 준다. 선택·수정·명시적 승인 후 일정과 할 일을 만들고 완료까지 관리한다.<br><br>
 <b>위치</b> <code>app/chaenggim/</code> · <code>app/web/</code>
@@ -77,7 +77,7 @@
 
 ## 2. 핵심 기능
 
-**LERO — 공지 → 실행 계획 → 완료**
+**LERO AI Agent — 공지 → 실행 계획 → 완료**
 
 | 기능 | 해결하는 불편 | 코드 위치 |
 |---|---|---|
