@@ -1,20 +1,20 @@
 # Implementation Plan
 
-- [ ] 1. HTTP 서버 골격과 정적 제공
+- [x] 1. HTTP 서버 골격과 정적 제공
   - `127.0.0.1`·`--port`(기본 4848) 바인딩, 포트 사용 중이면 종료 코드 1, 화면 폴더 기본값(CLI 옆 `ui/`가 있으면 그것, 없으면 CLI 기준 `../../ui`)과 `--ui`, 확장자별 Content-Type, 폴더 밖 경로 404, `/data/<이름>` 허용 목록·`Cache-Control: no-store`, 없는 경로 404·틀린 메서드 405
   - PBT: 폴더 밖을 가리키는 임의 경로 → 항상 404
   - _Requirements: 1.1, 1.2, 1.3, 4.4_
-- [ ] 2. SSE와 `.kiro/guard/` 감시
+- [x] 2. SSE와 `.kiro/guard/` 감시
   - `/api/stream` 연결 직후 현재 상태, 파일 변경 1초 안 전송(fs.watch + 500ms 크기·수정 시각 비교), events.jsonl 바이트 위치 추적(새 줄 = `events`, 연결 직후·파일이 짧아지거나 없어짐 = 마지막 50줄 `events-reset`), runs 생성·변경·삭제, 15초 ping, JSON 파싱 실패 시 건너뛰기
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6_
-- [ ] 3. 사람 저장 감시
+- [x] 3. 사람 저장 감시
   - 감시 대상(guard-check의 specsDir·testGlobs·sourceGlobs·vitest 설정, 같은 glob 함수) 감시·300ms 디바운스, adopt.lock 중과 사라진 뒤 2초 무시, 최근 10초 events로 에이전트·사람 가르기, save 줄, `check --if-changed` 자식 프로세스(동시에 하나, 대기 하나)
   - _Requirements: 3.1, 3.2, 3.3_
-- [ ] 4. 해결 기록 함수와 `POST /api/resolve`
+- [x] 4. 해결 기록 함수와 `POST /api/resolve`
   - `recordResolution`(대상마다 `canRecord` 확인 — red, 또는 edit-spec일 때 stale 노랑, approved 교체·덧붙이기, 원자적 저장, events `human` 줄), 원격 주소·Origin 검사(403), 본문 4KB·형식(400), 기록할 수 없는 요구사항(409), requirement 없으면 현재 red 전부
   - PBT: 같은 요구사항을 여러 번 승인해도 approved에 하나, 나머지 항목과 closed 그대로. 단위 테스트: `canRecord`(red → 둘 다, stale → edit-spec만, no-tests·green → 둘 다 아님)
   - _Requirements: 4.1, 4.2, 4.3_
-- [ ] 5. `guard resolve` CLI
+- [x] 5. `guard resolve` CLI
   - `<요구사항|all> <revert-code|edit-spec> [--root]`, 짧은 ID 해석(그 선택으로 기록할 수 있는 요구사항 중 하나만), `all` = 현재 red 전부, 종료 코드 0·1·64, stdout에 기록한 ID, 4의 함수 재사용
   - _Requirements: 5.1, 5.2_
 - [ ] 6. 손 확인

@@ -1,10 +1,14 @@
-// guard CLI entry: scan, judge, gate, check, adopt (resolve/serve are other specs).
+// guard CLI entry: scan, judge, gate, check, adopt, resolve, serve.
 import { readFileSync } from 'node:fs';
+import { resolve as resolvePath } from 'node:path';
+import type { Options } from './common.js';
 import { UsageError, opt, parseOptions, readTextFile, requireOpt, writeJson } from './common.js';
 import { runAdopt } from './adopt.js';
 import { runCheck } from './check.js';
 import { runGate } from './gate.js';
 import { judge } from './judge.js';
+import { resolveCommand } from './resolve.js';
+import { startServe } from './serve.js';
 import { DuplicateIdError, scanSpecs } from './scan.js';
 import type { SpecIndex } from './scan.js';
 
@@ -13,8 +17,9 @@ const USAGE = `usage: guard <command> [options]
   judge --index <f> --results <f> [--gen-hashes <f>] [--broken-seals <f>] --out <f>
   check [--root <dir>] [--results <f>] [--if-changed] [--summary]
   adopt <requirement> --test <f> --mutant <f> [--mutant <f> ...] [--root <dir>]
+  resolve <requirement|all> <revert-code|edit-spec> [--root <dir>]
+  serve [--root <dir>] [--port <n>] [--ui <dir>]
   gate  [--root <dir>] | --report <f> [--resolution <f>] [--sealed <f>] [--events <f>]   (stdin = event JSON)`;
-const OTHER = ['resolve', 'serve'];
 
 function readStdin(): Buffer {
   try {
@@ -26,14 +31,17 @@ function readStdin(): Buffer {
 
 async function main(argv: string[]): Promise<number> {
   const cmd = argv[0];
-  if (cmd === undefined || (cmd !== 'scan' && cmd !== 'judge' && cmd !== 'gate' && cmd !== 'check' && cmd !== 'adopt' && !OTHER.includes(cmd))) {
+  if (cmd === undefined || (cmd !== 'scan' && cmd !== 'judge' && cmd !== 'gate' && cmd !== 'check' && cmd !== 'adopt' && cmd !== 'resolve' && cmd !== 'serve')) {
     throw new UsageError('unknown or missing command');
   }
-  if (OTHER.includes(cmd)) {
-    process.stderr.write(`guard ${cmd}: not implemented in guard-core\n`);
-    return 70;
-  }
   const { opts, positionals } = parseOptions(argv.slice(1), cmd === 'check' ? ['if-changed', 'summary'] : []);
+  if (cmd === 'resolve') {
+    const r = resolveCommand({ positionals, root: opt(opts, 'root'), cwd: process.cwd() });
+    if (r.stdout) process.stdout.write(r.stdout);
+    if (r.stderr) process.stderr.write(r.stderr);
+    return r.code;
+  }
+  if (cmd === 'serve') return runServe(opts);
   if (cmd === 'adopt') {
     const r = await runAdopt({
       requirement: positionals[0],
@@ -98,6 +106,23 @@ async function main(argv: string[]): Promise<number> {
   });
   if (r.stderr) process.stderr.write(r.stderr);
   return r.code;
+}
+
+/** `guard serve`: run until stopped; exit 1 when the port cannot be used. // [guard-serve:R1.1] */
+async function runServe(opts: Options): Promise<number> {
+  const portText = opt(opts, 'port') ?? '4848';
+  if (!/^\d+$/.test(portText) || Number(portText) > 65535) throw new UsageError('--port must be 0-65535');
+  const ui = opt(opts, 'ui');
+  try {
+    await startServe(
+      { root: resolvePath(process.cwd(), opt(opts, 'root') ?? '.'), port: Number(portText), uiDir: ui === undefined ? undefined : resolvePath(process.cwd(), ui) },
+      (port) => process.stdout.write(`http://127.0.0.1:${port}/\n`),
+    );
+  } catch (e) {
+    process.stderr.write(`guard serve: ${e instanceof Error ? e.message : String(e)}\n`);
+    return 1;
+  }
+  return new Promise<number>(() => undefined);
 }
 
 function fail(e: unknown): void {
