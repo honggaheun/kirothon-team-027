@@ -3,7 +3,7 @@
 이 레포에서 Kiro는 두 가지로 쓰였다.
 
 1. **만든 것: Kiro Power — Tripwire.** Kiro의 Specs·Hooks·Steering·Powers 위에서 동작하는 파워를 만들었다(`power/tripwire/`).
-2. **만드는 방법: 개발 과정 전체를 Kiro로.** 파워와 AI 에이전트 서비스의 기획·설계·구현·검증을 Kiro 스펙과 Kiro 에이전트로 진행했고, 그 결과물이 `.kiro/`와 `app/.kiro/`에 남아 있다.
+2. **만드는 방법: 개발 과정 전체를 Kiro로.** 파워와 AI 에이전트(캡처한 공지를 일정과 할 일로 처리)의 기획·설계·구현·검증을 Kiro 스펙과 Kiro 에이전트로 진행했고, 그 결과물이 `.kiro/`에 남아 있다.
 
 ---
 
@@ -16,13 +16,15 @@
 | guard CLI | `scan`·`check`·`gate`·`adopt`·`resolve`·`serve`. Node 내장 모듈만 쓴다 | `guard/src/`, 파워 안 번들 `power/tripwire/skills/setup/scripts/guard/` |
 | Kiro와 맞물리는 곳 | PreToolUse hook = 문지기(빨강이면 종료 코드 2로 쓰기·셸 차단), PostToolUse hook = 쓰기 뒤 검사, SessionStart hook = 판정 요약, Steering = 봉인·결정 규칙 | `.kiro/hooks/`, `hooks-variants/`, `.kiro/steering/guard-rules.md` |
 | 화면 | 수용 기준과 코드 줄을 실로 잇고, 반례·차단·사람의 결정을 보여 주는 `guard serve` 화면 | `ui/` |
-| 이 프로젝트에서의 역할 | AI 에이전트 서비스에 설치해, 에이전트의 행동을 판정하는 규칙 관문이 개발 내내 스펙대로인지 지켰다 | `app/.kiro/` |
+| 확인한 동작 | 예제 작업 공간에서 수용 기준 6개를 봉인하고, 기준을 어긴 저장 → 반례 → Kiro 차단 → 사람의 결정 → 복구까지 확인했다. 레포 밖 새 작업 공간에도 파워만으로 설치됐다 | `demo/`, `power/tripwire/` |
 
 ---
 
 ## 2. Kiro 활용 내역
 
-시간과 크레딧은 Kiro CLI 실행 기록에서 옮겼다.
+### Kiro Power — Tripwire
+
+시간은 Kiro CLI 실행 기록에서 옮겼다.
 
 | 단계 | 사용한 Kiro 기능 | 무엇을 했는지 | 결과물 위치 |
 |---|---|---|---|
@@ -36,9 +38,15 @@
 | 검증 | Steering | 검사를 만들던 Kiro가 "판정 함수 외의 코드를 import하지 않는다" 규칙에 걸려 멈추고, 가입 상태를 만드는 준비 함수를 써도 되는지 사람에게 물었다. 허용한 뒤 진행했다 | `.kiro/steering/guard-rules.md` |
 | 검증 | Hooks | 문지기(PreToolUse)와 쓰기 뒤 검사(PostToolUse)를 예제 작업 공간에 켰다. 사람이 비밀번호 최소 길이를 8에서 6으로 저장하자 수 초 안에 R2.3이 빨강이 됐고, 검사를 돌리려던 Kiro의 셸 실행이 막혔다. 사람이 '코드를 되돌린다'를 고르자 Kiro가 코드를 되돌렸고, 쓰기 뒤 검사가 초록으로 바꾸며 해결이 닫혔다 | `demo/.kiro/hooks/tripwire.json` |
 | 기타 | Powers | guard 빌드와 화면을 파워에 묶고, 레포 밖 새 작업 공간에 설치했다. Kiro가 setup 스킬로 guard를 `.kiro/guard/bin/`에 복사하고 hook 6개를 깔았다(2.0분). 이어서 쓰기 하나와 셸 명령을 시키자, 쓰기·셸마다 hook이 그 guard를 불러 기록을 남겼다 | `power/tripwire/` |
-| 기타 | Powers + Hooks | AI 에이전트 서비스에 Tripwire를 설치했다 <!-- 결과 --> | `app/.kiro/` |
+### AI 에이전트 — 캡처한 공지를 일정과 할 일로
 
-<!-- AI 에이전트 서비스의 기획·설계·구현·검증 행은 진행하며 더한다 -->
+| 단계 | 사용한 Kiro 기능 | 무엇을 했는지 | 결과물 위치 |
+|---|---|---|---|
+| 기획 | <!-- 예: Spec (requirements) --> | | |
+| 설계 | | | |
+| 구현 | | | |
+| 검증 | | | |
+| 기타 | <!-- Steering, Hooks, MCP, Tripwire 적용 등 --> | | |
 
 ## 개발 과정에서 바뀐 점
 
