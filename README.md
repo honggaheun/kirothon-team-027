@@ -104,15 +104,48 @@ cd demo && npx vitest run # 예제의 봉인된 속성 검사 6개
 
 ## Kiro Power — Tripwire
 
-Kiro 스펙의 수용 기준(EARS)을 fast-check 속성 검사로 실행해, 코드나 자율 에이전트가 스펙을 벗어나는 순간 반례로 잡는 Kiro 파워다. 판정은 코드가 하고, 결정은 사람이 한다.
+Kiro 스펙의 수용 기준(EARS)을 fast-check 속성 검사로 실행해, 코드나 자율 에이전트가 스펙을 벗어나는 순간 반례로 잡는 Kiro 파워다. 판정은 코드가 하고, 결정은 사람이 한다. `guard serve` 화면에서는 검사관이 수용 기준과 코드 줄을 잇는 실을 따라 순찰한다.
 
-| 단계 | 하는 일 |
-|---|---|
-| 1. 기준과 코드를 잇는다 | 수용 기준 ID(`[R2.3]`)를 단 코드 줄과 검사를 잇는다 |
-| 2. 바뀌면 검사한다 | Kiro가 쓰면 hook(PostToolUse)이, 사람이 저장하면 `guard serve`가 검사한다 |
-| 3. 반례를 찾는다 | fast-check가 기준을 어기는 입력을 찾아 최소 반례까지 줄인다 |
-| 4. 막는다 | 빨강이면 문지기 hook(PreToolUse)이 종료 코드 2로 Kiro의 다음 쓰기·셸을 막는다 |
-| 5. 사람이 고른다 | "코드를 되돌린다" 또는 "스펙을 고친다"를 고르면 그 작업만 열린다 |
+<!-- 데모 영상 링크 -->
+
+<table>
+<tr>
+<td width="50%" valign="top">
+<img src="docs/media/scene-1-patrol.jpg" alt="검사관이 수용 기준과 코드 줄을 잇는 실을 따라 순찰하는 화면"><br>
+<b>1. 수용 기준을 코드와 잇는다</b><br>
+수용 기준마다 봉인된 속성 검사가 있고, 실이 기준과 코드 줄(<code>[R2.3]</code>)을 잇는다.
+</td>
+<td width="50%" valign="top">
+<img src="docs/media/scene-2-look.jpg" alt="검사관이 바뀐 글자 6을 비추는 화면"><br>
+<b>2. 코드가 바뀌면 바로 검사한다</b><br>
+Kiro가 쓰면 hook(PostToolUse)이, 사람이 저장하면 <code>guard serve</code>가 검사한다.
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<img src="docs/media/scene-3-crew.jpg" alt="시험한 입력과 줄이기 경로가 칸에 채워진 화면"><br>
+<b>3. 반례를 찾는다</b><br>
+fast-check가 기준을 어기는 입력을 찾아 최소 반례까지 줄인다.
+</td>
+<td width="50%" valign="top">
+<img src="docs/media/scene-4-catch.jpg" alt="어긴 기준의 실이 끊기고 반례 도장이 찍힌 화면"><br>
+<b>4. 어긴 기준의 실이 끊어진다</b><br>
+위반한 기준과 최소 반례가 표시되고 결정 버튼이 나타난다.
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<img src="docs/media/scene-5-stop.jpg" alt="검사관이 STOP 표지판을 들고 에이전트 활동의 차단 줄을 비추는 화면"><br>
+<b>5. Kiro를 막는다</b><br>
+문지기 hook(PreToolUse)이 종료 코드 2로 Kiro의 다음 쓰기·셸을 막고, Kiro는 사람에게 묻는다.
+</td>
+<td width="50%" valign="top">
+<img src="docs/media/scene-6-clear.jpg" alt="실이 다시 이어지고 상태 띠가 초록으로 돌아온 화면"><br>
+<b>6. 사람이 고르면 다시 이어진다</b><br>
+"코드를 되돌린다" 또는 "스펙을 고친다"를 고르면 그 작업만 열리고, 초록이 되면 실이 이어진다.
+</td>
+</tr>
+</table>
 
 검사가 약해지는 것도 막는다. 수용 기준마다 일부러 틀린 구현(변형)을 만들어 검사가 잡는지 확인한 뒤 사람이 봉인(`guard adopt`)하고, 봉인된 검사는 에이전트가 고칠 수 없다.
 
