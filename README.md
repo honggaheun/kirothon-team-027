@@ -1,28 +1,51 @@
-# 캡처한 공지를 일정과 할 일로 — AI 에이전트 + Kiro Power Tripwire
+<h1 align="center">캡처한 공지를 일정과 할 일로<br><sub>AI 에이전트 + Kiro Power Tripwire</sub></h1>
 
-캡처한 공지를 AI 에이전트가 읽어 실제 일정과 할 일로 처리해 준다. 그 과정을 만들면서 스펙을 지키게 한 Kiro 파워 Tripwire를 함께 만들었다.
+<p align="center">캡처한 공지를 AI 에이전트가 읽어 실제 일정과 할 일로 처리해 준다.<br>
+그 과정을 만들면서 스펙을 지키게 한 Kiro 파워 Tripwire를 함께 만들었다.</p>
 
 <p align="center">
-  <img src="docs/media/tripwire-banner.png" width="100%" alt="Tripwire — 코드나 자율 에이전트가 스펙을 벗어나는 순간 반례로 잡는 Kiro 파워">
+  <img alt="KIROTHON 2026" src="https://img.shields.io/badge/KIROTHON-2026-6E56F8?style=for-the-badge">
+  <img alt="team-027" src="https://img.shields.io/badge/team-027-1F1B2E?style=for-the-badge">
+  <img alt="Built with Kiro" src="https://img.shields.io/badge/Built%20with-Kiro-7D03D0?style=for-the-badge">
+  <a href="#kiro-power--tripwire"><img alt="Kiro Power Tripwire" src="https://img.shields.io/badge/Kiro%20Power-Tripwire-241843?style=for-the-badge"></a>
 </p>
 
-<p align="center">KIROTHON 2026 출품작 · team-027</p>
+<p align="center">
+  <a href="#1-문제-정의">문제 정의</a> ·
+  <a href="#2-핵심-기능">핵심 기능</a> ·
+  <a href="#3-사용-시나리오">사용 시나리오</a> ·
+  <a href="#6-설치와-실행">설치와 실행</a> ·
+  <a href="#kiro-power--tripwire">Kiro Power</a> ·
+  <a href="BUILD_REPORT.md">BUILD REPORT</a>
+</p>
 
 **Demo:**
 
-| 데모 | 영상 |
-|---|---|
-| AI 에이전트 — 캡처한 공지를 일정과 할 일로 | <!-- AI 에이전트 데모 영상 링크 --> |
-| Kiro Power — Tripwire (기준을 어긴 저장 → 반례 → Kiro 차단 → 사람의 결정 → 복구) | [영상 보기](https://drive.google.com/file/d/1kThXh9NlS03dPeu2xSn-zYvGBL4IH7N_/view?usp=sharing) |
-
-이 레포에는 두 가지가 들어 있다.
-
-| | 무엇 | 위치 |
+| 데모 | 보여 주는 것 | 영상 |
 |---|---|---|
-| **AI 에이전트 — 공지 → 일정·할 일** | 학교·회사·동네에서 받은 공지를 캡처해 넘기면, 에이전트가 내용을 읽어 실제 일정과 할 일로 처리해 준다 | <!-- 에이전트 코드 위치 --> |
-| **Kiro Power — Tripwire** | 이 프로젝트를 위해 만든 Kiro 파워. 스펙의 수용 기준을 실행 가능한 검사로 바꾸고, 코드나 에이전트가 기준을 어기면 반례로 잡아 Kiro 에이전트의 다음 작업을 막는다 | `power/tripwire/`, `guard/`, `ui/` |
+| 🗓️ **AI 에이전트** | 캡처한 공지 → 일정·할 일 등록 | <!-- AI 에이전트 데모 영상 링크 --> |
+| 🛡️ **Tripwire** — Kiro Power | 기준을 어긴 저장 → 반례 → Kiro 차단 → 사람의 결정 → 복구 | [영상 보기](https://drive.google.com/file/d/1kThXh9NlS03dPeu2xSn-zYvGBL4IH7N_/view?usp=sharing) |
 
-Kiro를 개발 과정의 어디에 어떻게 썼는지는 [BUILD_REPORT.md](BUILD_REPORT.md)에 단계별로 적었다.
+### 이 레포에 담긴 두 가지
+
+<table>
+<tr>
+<td width="50%" valign="top">
+<h4>🗓️ AI 에이전트 — 공지 → 일정·할 일</h4>
+<img src="docs/media/agent-login.png" width="100%" alt="AI 에이전트 로그인 화면 — Google로 로그인, 오늘 필요한 준비를 모은 목록"><br>
+학교·회사·동네에서 받은 공지를 캡처해 넘기면, 에이전트가 내용을 읽어 실제 일정과 할 일로 처리해 준다.<br><br>
+<b>위치</b> <!-- 에이전트 코드 위치 -->
+</td>
+<td width="50%" valign="top">
+<h4>🛡️ Tripwire — Kiro Power</h4>
+<img src="docs/media/tripwire-banner.png" width="100%" alt="Tripwire — 코드나 자율 에이전트가 스펙을 벗어나는 순간 반례로 잡는 Kiro 파워"><br>
+이 프로젝트를 위해 만든 Kiro 파워. 스펙의 수용 기준을 실행 가능한 검사로 바꾸고, 코드나 에이전트가 기준을 어기면 반례로 잡아 Kiro 에이전트의 다음 작업을 막는다.<br><br>
+<b>위치</b> <code>power/tripwire/</code> · <code>guard/</code> · <code>ui/</code>
+</td>
+</tr>
+</table>
+
+> Kiro를 개발 과정의 어디에 어떻게 썼는지는 [BUILD_REPORT.md](BUILD_REPORT.md)에 두 갈래(AI 에이전트 · Tripwire)로 나눠 단계별로 적었다.
 
 ---
 
@@ -49,7 +72,7 @@ Kiro를 개발 과정의 어디에 어떻게 썼는지는 [BUILD_REPORT.md](BUIL
 
 | 기능 | 해결하는 불편 | 코드 위치 |
 |---|---|---|
-**AI 에이전트**
+**🗓️ AI 에이전트**
 
 | 기능 | 해결하는 불편 | 코드 위치 |
 |---|---|---|
@@ -57,7 +80,7 @@ Kiro를 개발 과정의 어디에 어떻게 썼는지는 [BUILD_REPORT.md](BUIL
 | <!-- 일정 등록 --> | | |
 | <!-- 할 일 만들기 --> | | |
 
-**Kiro Power — Tripwire**
+**🛡️ Tripwire — Kiro Power**
 
 | 기능 | 해결하는 불편 | 코드 위치 |
 |---|---|---|
