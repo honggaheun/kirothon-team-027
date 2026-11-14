@@ -36,7 +36,7 @@ export class UsageError extends Error {}
 export type Options = Map<string, string[]>;
 
 /** Parse `--key value` and `--key=value` options; the rest are positionals. */
-export function parseOptions(args: string[]): { opts: Options; positionals: string[] } {
+export function parseOptions(args: string[], flags: string[] = []): { opts: Options; positionals: string[] } {
   const opts: Options = new Map();
   const positionals: string[] = [];
   for (let i = 0; i < args.length; i++) {
@@ -48,6 +48,9 @@ export function parseOptions(args: string[]): { opts: Options; positionals: stri
       if (eq >= 0) {
         key = a.slice(2, eq);
         val = a.slice(eq + 1);
+      } else if (flags.includes(a.slice(2))) {
+        key = a.slice(2);
+        val = '';
       } else {
         key = a.slice(2);
         if (i + 1 >= args.length) throw new UsageError(`missing value for --${key}`);

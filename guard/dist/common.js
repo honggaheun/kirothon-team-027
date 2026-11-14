@@ -28,7 +28,7 @@ export function writeJson(file, value) {
 export class UsageError extends Error {
 }
 /** Parse `--key value` and `--key=value` options; the rest are positionals. */
-export function parseOptions(args) {
+export function parseOptions(args, flags = []) {
     const opts = new Map();
     const positionals = [];
     for (let i = 0; i < args.length; i++) {
@@ -40,6 +40,10 @@ export function parseOptions(args) {
             if (eq >= 0) {
                 key = a.slice(2, eq);
                 val = a.slice(eq + 1);
+            }
+            else if (flags.includes(a.slice(2))) {
+                key = a.slice(2);
+                val = '';
             }
             else {
                 key = a.slice(2);

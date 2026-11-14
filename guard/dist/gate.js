@@ -118,7 +118,8 @@ function approvals(resolution) {
     }
     return { all, editSpec };
 }
-function describeRed(r) {
+/** `<id> (<reason>)` text for a red requirement, shared with check. */
+export function describeRed(r) {
     const id = String(r.id);
     if (r.reason === 'seal-broken') {
         const items = asArray(r.brokenSeals).map((b) => {

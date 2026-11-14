@@ -112,7 +112,7 @@ export function loadJson(file: string): Loaded {
   }
 }
 
-interface ReportReq {
+export interface ReportReq {
   id?: unknown;
   verdict?: unknown;
   reason?: unknown;
@@ -143,7 +143,8 @@ function approvals(resolution: Loaded): { all: Set<string>; editSpec: Set<string
   return { all, editSpec };
 }
 
-function describeRed(r: ReportReq): string {
+/** `<id> (<reason>)` text for a red requirement, shared with check. */
+export function describeRed(r: ReportReq): string {
   const id = String(r.id);
   if (r.reason === 'seal-broken') {
     const items = asArray(r.brokenSeals).map((b) => {
