@@ -34,7 +34,7 @@
 | 검증 | Specs (tasks) | Kiro가 guard-core·guard-check의 작업 17개를 코드·검사와 하나씩 대조해 15개를 완료로 표시하고, 검사가 빠진 2개(scan 종료 코드, check 잠금 시간)를 찾아 검사를 더한 뒤 표시했다. guard-serve도 같은 방법으로 검사 2개를 더했다 | `.kiro/specs/*/tasks.md`, `guard/test/` |
 | 검증 | Powers (property-tests · check-the-checks 스킬) | 예제의 수용 기준 6개마다 속성 검사를 만들고, 기준을 어긴 변형 13개를 모두 잡는지 확인한 뒤 사람이 봉인했다 | `demo/tests/`, `demo/mutants/`, `demo/.kiro/guard/sealed.json` |
 | 검증 | Steering | 검사를 만들던 Kiro가 "판정 함수 외의 코드를 import하지 않는다" 규칙에 걸려 멈추고, 가입 상태를 만드는 준비 함수를 써도 되는지 사람에게 물었다. 허용한 뒤 진행했다 | `.kiro/steering/guard-rules.md` |
-| 검증 | Hooks | 문지기(PreToolUse)와 쓰기 뒤 검사(PostToolUse)를 예제 작업 공간에 켰다 | `demo/.kiro/hooks/tripwire.json` |
+| 검증 | Hooks | 문지기(PreToolUse)와 쓰기 뒤 검사(PostToolUse)를 예제 작업 공간에 켰다. 사람이 비밀번호 최소 길이를 8에서 6으로 저장하자 수 초 안에 R2.3이 빨강이 됐고, 검사를 돌리려던 Kiro의 셸 실행이 막혔다. 사람이 '코드를 되돌린다'를 고르자 Kiro가 코드를 되돌렸고, 쓰기 뒤 검사가 초록으로 바꾸며 해결이 닫혔다 | `demo/.kiro/hooks/tripwire.json` |
 | 기타 | Powers | guard 빌드와 화면을 파워에 묶고, 레포 밖 새 작업 공간에 설치했다. Kiro가 setup 스킬로 guard를 `.kiro/guard/bin/`에 복사하고 hook 6개를 깔았다(2.0분). 이어서 쓰기 하나와 셸 명령을 시키자, 쓰기·셸마다 hook이 그 guard를 불러 기록을 남겼다 | `power/tripwire/` |
 | 기타 | Powers + Hooks | AI 에이전트 서비스에 Tripwire를 설치했다 <!-- 결과 --> | `app/.kiro/` |
 
