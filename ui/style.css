@@ -1,0 +1,275 @@
+/* Tripwire 스펙 실 무대 화면 — 1920×1080 배치·색 */
+[hidden] { display: none !important; }
+/* 글꼴: ui/fonts/의 파일(없으면 :root 변수의 대체 글꼴) */
+@font-face { font-family: "Pretendard Variable"; src: url(fonts/PretendardVariable.woff2) format("woff2"); font-weight: 45 920; font-display: swap; }
+@font-face { font-family: "Anybody"; src: url(fonts/Anybody.woff2) format("woff2"); font-weight: 100 900; font-stretch: 50% 150%; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url(fonts/IBMPlexMono-400.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url(fonts/IBMPlexMono-500.woff2) format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url(fonts/IBMPlexMono-600.woff2) format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Permanent Marker"; src: url(fonts/PermanentMarker.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+
+:root {
+  --night: #0e0a17;
+  --panel: #1c1233;
+  --panel-2: #241843;
+  --line: #34265c;
+  --kiro: #8a44ff;
+  --lav: #c7a6ff;
+  --white: #ffffff;
+  --text: #f1ebff;
+  --dim: #a99bc9;
+  --red: #ff4d3d;
+  --mint: #46e3a2;
+  --yellow: #ffd23f;
+  --amber: #ffc94d;
+  --blue: #2f5fe0;
+  --ink: #0b0b0c;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --f-kr: "Pretendard Variable", "Malgun Gothic", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", Consolas, ui-monospace, monospace;
+  --f-hand: "Permanent Marker", "Ink Free", "Segoe Print", cursive;
+  --f-title: "Anybody", "Pretendard Variable", Bahnschrift, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--night); }
+body { font-family: var(--f-kr); color: var(--text); -webkit-font-smoothing: antialiased; }
+
+#viewport { position: fixed; inset: 0; overflow: hidden; background: var(--night); }
+#stage {
+  position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+  transform-origin: 0 0; overflow: hidden;
+  background:
+    radial-gradient(ellipse 900px 620px at 600px 470px, #1a1130 0%, rgba(14,10,23,0) 70%),
+    radial-gradient(circle at 1px 1px, rgba(199,166,255,0.07) 1px, transparent 1.6px) 0 0 / 22px 22px,
+    var(--night);
+}
+
+/* 층: 판 바탕(0) → 빛 웅덩이(1) → 실(1) → 글자 판(2) → 원뿔 빛(5) → 도장(6) → 연출(6)
+   빛 웅덩이는 글자 아래에만 깔린다. 화면 전체 합성(mix-blend)·filter 층은 쓰지 않는다 */
+#bg-panels { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; z-index: 0; pointer-events: none; }
+.bgp-act { position: absolute; left: 1382px; top: 72px; width: 538px; height: 808px; background: #150e26; border-left: 2px solid var(--line); }
+.bgp-band { position: absolute; left: 0; top: 880px; width: 1920px; height: 200px; background: #130c22; border-top: 2px solid var(--line); }
+#poolfx { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; z-index: 1; pointer-events: none; overflow: visible; }
+#threads { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; z-index: 1; pointer-events: none; overflow: visible; }
+#status, #middle, #band { z-index: 2; }
+#beamfx { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; z-index: 5; pointer-events: none; overflow: visible; }
+#stamps { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; z-index: 6; pointer-events: none; overflow: visible; }
+#fx { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; z-index: 6; pointer-events: none; overflow: visible; }
+
+/* 상태 띠 72px — data-overall: green · yellow · red · none(판정 없음·순찰 중·반례 확인 중) */
+#status {
+  position: absolute; left: 0; top: 0; width: 1920px; height: 72px;
+  display: flex; align-items: center; gap: 28px; padding: 0 28px;
+  background: #0f2a22; border-bottom: 2px solid #1d5a45;
+  transition: background-color .45s var(--ease), border-color .45s var(--ease);
+}
+.brand { display: flex; align-items: baseline; gap: 10px; min-width: 210px; }
+.brand-mark { font-family: var(--f-title); font-size: 34px; font-weight: 900; font-variation-settings: "wdth" 130; letter-spacing: -0.5px; color: var(--white); }
+.brand-sub { font-size: 18px; font-weight: 700; color: var(--lav); }
+#status-text { flex: 1; min-width: 0; font-size: 31px; font-weight: 800; letter-spacing: -0.3px; color: var(--mint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#status-meta { display: flex; align-items: center; gap: 18px; font-size: 18px; font-weight: 700; white-space: nowrap; }
+#status-phase { color: var(--lav); padding: 6px 14px; border: 2px solid currentColor; border-radius: 999px; font-size: 16px; }
+#status-phase:empty { display: none; }
+#status-sum { font-family: var(--f-mono); color: var(--text); }
+#stage[data-overall="red"] #status { background: var(--red); border-bottom-color: var(--ink); }
+#stage[data-overall="yellow"] #status { background: var(--yellow); border-bottom-color: var(--ink); }
+#stage[data-overall="red"] #status-text,
+#stage[data-overall="red"] #status-sum,
+#stage[data-overall="red"] #status-phase,
+#stage[data-overall="red"] .brand-mark,
+#stage[data-overall="red"] .brand-sub,
+#stage[data-overall="yellow"] #status-text,
+#stage[data-overall="yellow"] #status-sum,
+#stage[data-overall="yellow"] #status-phase,
+#stage[data-overall="yellow"] .brand-mark,
+#stage[data-overall="yellow"] .brand-sub { color: var(--ink); }
+#stage[data-overall="none"] #status { background: var(--panel); border-bottom-color: var(--line); }
+#stage[data-overall="none"] #status-text { color: var(--lav); }
+/* 상태가 바뀔 때 글자색은 보간하지 않는다: 바탕이 거의 바뀔 때까지(앞 40%) 글자를 숨겼다가 새 색으로 나타난다 */
+#stage[data-overall="green"] #status > * { animation: st-in-g .5s linear both; }
+#stage[data-overall="red"] #status > * { animation: st-in-r .5s linear both; }
+#stage[data-overall="yellow"] #status > * { animation: st-in-y .5s linear both; }
+#stage[data-overall="none"] #status > * { animation: st-in-n .5s linear both; }
+@keyframes st-in-g { 0%, 40% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes st-in-r { 0%, 40% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes st-in-y { 0%, 40% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes st-in-n { 0%, 40% { opacity: 0; } 100% { opacity: 1; } }
+
+/* 가운데 808px */
+#middle { position: absolute; left: 0; top: 72px; width: 1920px; height: 808px; }
+#spec { position: absolute; left: 0; top: 0; width: 1382px; height: 808px; }
+.col-head { position: absolute; top: 18px; font-size: 17px; font-weight: 800; color: var(--lav); letter-spacing: 0.2px; white-space: nowrap; }
+.col-head .dim { font-family: var(--f-mono); font-weight: 500; font-size: 15px; color: var(--dim); margin-left: 8px; }
+#head-req { left: 28px; }
+#head-code { left: 760px; }
+
+/* 요구사항 카드 */
+#cards { position: absolute; left: 28px; top: 56px; width: 380px; height: 738px; }
+.card {
+  position: absolute; left: 0; width: 380px; overflow: hidden;
+  padding: 8px 12px 8px 14px; border-radius: 12px;
+  background: var(--panel); border: 2px solid var(--line);
+  transition: border-color .35s var(--ease), background-color .35s var(--ease);
+}
+/* 빛 받은 자리: 판 바탕 위·글자 아래의 빛 얼룩 자리. 흰 얼룩(.lit-w)·빨간 얼룩(.lit-r) 두 겹이 꽉 채운다.
+   가운데 투명도 0.16 = 가장 어두운 보조 글자(#a99bc9)도 대비 4.5 이상 남는 상한 */
+.card > .lit, .cline > .lit, .aline > .lit { position: absolute; left: -160px; top: 50%; width: 320px; height: 170px; margin-top: -85px; opacity: 0; pointer-events: none; }
+.lit-w, .lit-r { position: absolute; inset: 0; }
+.lit-w { background: radial-gradient(closest-side, rgba(233,223,255,0.16), rgba(199,166,255,0.08) 55%, rgba(199,166,255,0) 100%); }
+.lit-r { opacity: 0; background: radial-gradient(closest-side, rgba(255,214,206,0.16), rgba(255,120,100,0.08) 55%, rgba(255,77,61,0) 100%); }
+.card-top { position: relative; display: flex; align-items: center; gap: 10px; height: 22px; }
+.card-id { font-family: var(--f-mono); font-weight: 600; font-size: 19px; color: var(--white); white-space: nowrap; }
+.card-tests { font-size: 14px; font-weight: 600; color: var(--dim); white-space: nowrap; }
+.card-seal { font-size: 14px; font-weight: 700; padding: 1px 8px; border-radius: 999px; color: var(--lav); border: 1.5px solid var(--lav); white-space: nowrap; }
+.card-seal.broken { color: var(--ink); background: var(--red); border-color: var(--red); }
+.card-badge { margin-left: auto; font-size: 14px; font-weight: 800; padding: 2px 10px; border-radius: 999px; color: var(--dim); border: 1.5px solid var(--line); white-space: nowrap; transition: color .3s, background-color .3s, border-color .3s; }
+.card-text { position: relative; margin-top: 4px; font-size: 17px; font-weight: 500; line-height: 1.28; color: var(--text); word-break: keep-all;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.card-text .kw { font-family: var(--f-mono); font-weight: 600; font-size: 15px; color: var(--lav); }
+.card-basis { position: relative; display: inline-block; margin-top: 3px; max-width: 100%; font-size: 14px; font-weight: 700; line-height: 18px; padding: 0 8px;
+  border-radius: 6px; color: var(--lav); border: 1.5px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card.pass { border-color: #3c2f66; }
+.card.pass .card-badge { color: var(--mint); border-color: rgba(70,227,162,0.55); }
+.card.yellow .card-badge { color: var(--ink); background: var(--yellow); border-color: var(--yellow); }
+.card.red { border-color: var(--red); background: #2b1020; }
+.card.red .card-badge { color: var(--ink); background: var(--red); border-color: var(--red); }
+
+/* 코드 줄 */
+#code { position: absolute; left: 760px; top: 56px; width: 600px; height: 738px; }
+.cline {
+  position: absolute; left: 0; width: 600px; height: 46px; overflow: hidden;
+  display: flex; align-items: center; gap: 10px; padding: 0 10px 0 6px;
+  border-radius: 9px; background: var(--panel); border: 2px solid var(--line);
+  font-family: var(--f-mono); font-size: 16px; white-space: pre;
+  transition: border-color .35s var(--ease), background-color .35s var(--ease);
+}
+.cline .ln { position: relative; min-width: 30px; width: auto; flex: none; text-align: right; color: var(--dim); font-size: 14px; }
+.cline .tx { position: relative; flex: 1; min-width: 0; color: var(--text);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; white-space: pre-wrap; word-break: break-all; line-height: 19px; }
+.cline.one .tx { -webkit-line-clamp: 1; }
+.cline .tx .str { color: #ffd9a8; }
+.cline .tx .cm { color: var(--lav); }
+.cline .tx mark { background: var(--amber); color: var(--ink); border-radius: 3px; padding: 0 2px; }
+.cline.pass { border-color: #3c2f66; }
+.cline.changed { border-color: var(--amber); }
+.cline.red { border-color: var(--red); background: #2b1020; }
+.gapmark { position: absolute; left: 8px; font-family: var(--f-mono); font-size: 13px; color: var(--dim); }
+.diffchip { position: absolute; right: 8px; transform: translateY(-100%); font-size: 14px; font-weight: 800; white-space: nowrap;
+  color: var(--ink); background: var(--amber); padding: 2px 10px; border-radius: 6px; opacity: 0; }
+.no-code { position: absolute; left: 0; top: 0; font-size: 17px; font-weight: 600; color: var(--dim); }
+
+/* 에이전트 활동 */
+/* 바탕·테두리는 #bg-panels .bgp-act(빛 웅덩이 아래 층)에 있다 */
+#activity { position: absolute; left: 1382px; top: 0; width: 538px; height: 808px; }
+#activity .col-head { left: 22px; }
+#act-lines { position: absolute; left: 20px; top: 56px; width: 498px; height: 600px; overflow: hidden; }
+.aline {
+  position: absolute; left: 0; top: 0; width: 498px; height: 46px; display: flex; align-items: center; gap: 10px;
+  padding: 0 12px; border-radius: 9px; background: var(--panel); border: 2px solid var(--line);
+  font-family: var(--f-mono); font-size: 16px; white-space: nowrap; overflow: hidden; opacity: 0;
+}
+.aline .ts, .aline .act, .aline .tg { position: relative; }
+.aline.human > .lit { display: none; }
+.aline .ts { color: var(--dim); font-size: 15px; }
+.aline .act { min-width: 68px; text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 0.6px; padding: 3px 6px; border-radius: 5px; color: var(--ink); background: var(--lav); }
+.aline .tg { flex: 1; min-width: 0; color: var(--text); overflow: hidden; text-overflow: ellipsis; font-family: var(--f-mono); font-size: 15px; }
+.aline.write .act { background: var(--amber); }
+.aline.hook .act { background: var(--kiro); color: var(--white); }
+.aline.block { background: var(--red); border-color: var(--red); }
+.aline.block .ts, .aline.block .tg { color: var(--ink); font-weight: 600; }
+.aline.block .act { background: var(--ink); color: var(--red); }
+.aline.human { background: var(--blue); border-color: var(--blue); }
+.aline.human .ts, .aline.human .tg { color: var(--white); font-weight: 600; }
+.aline.human .act { background: var(--white); color: var(--blue); }
+.aline .tg.kr { font-family: var(--f-kr); font-weight: 700; }
+
+#act-actions { position: absolute; left: 20px; top: 672px; width: 498px; height: 60px; display: flex; gap: 14px; opacity: 0; pointer-events: none; transition: opacity .35s var(--ease); }
+#act-actions.show { opacity: 1; pointer-events: auto; }
+#act-actions button {
+  flex: 1; height: 60px; border-radius: 12px; border: 2px solid var(--ink); cursor: pointer;
+  font-family: var(--f-kr); font-size: 21px; font-weight: 800; color: var(--ink); background: var(--white);
+  box-shadow: 0 4px 0 var(--ink);
+}
+#act-actions button:active, #act-actions button:disabled { box-shadow: 0 1px 0 var(--ink); background: #dcd0ff; }
+#act-actions button:disabled { cursor: default; }
+#act-actions:not(.show) button { pointer-events: none; }
+#act-actions button:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+#toast { position: absolute; left: 20px; top: 748px; width: 498px; height: 42px; display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; background: var(--blue); color: var(--white); border: 2px solid var(--blue); font-size: 18px; font-weight: 800; opacity: 0; transition: opacity .3s var(--ease); }
+#toast.show { opacity: 1; }
+#toast.fail { background: var(--panel); border-color: var(--red); color: var(--text); }
+
+/* 반례 띠 200px */
+/* 바탕·테두리는 #bg-panels .bgp-band(빛 웅덩이 아래 층)에 있다 */
+#band { position: absolute; left: 0; top: 880px; width: 1920px; height: 200px; }
+#slots, #shrink { position: absolute; left: 0; top: 0; width: 1920px; height: 200px; pointer-events: none; }
+.slot { position: absolute; width: 100px; height: 64px; border-radius: 10px; border: 2px dashed #3e2f6b; }
+.shrink-slot { position: absolute; width: 132px; height: 64px; border-radius: 10px; border: 2px dashed #3e2f6b; }
+.arrow { position: absolute; width: 40px; height: 64px; display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--lav); opacity: 0; }
+.sep { position: absolute; left: 1168px; top: 54px; width: 2px; height: 88px; background: var(--line); }
+.band-empty { position: absolute; left: 32px; top: 66px; width: 1108px; height: 64px; display: flex; align-items: center; justify-content: center;
+  font-size: 19px; font-weight: 600; color: var(--dim); transition: opacity .35s; }
+.band-empty span { background: rgba(19,12,34,0.82); padding: 6px 16px; border-radius: 8px; }
+/* 칸: 입력 칩의 결과 모양(통과 = 판색·민트 테두리, 실패 = 빨간 바탕·먹 글자) */
+.cell { position: absolute; height: 64px; border-radius: 10px; border: 2px solid var(--mint); background: var(--panel); opacity: 0; overflow: hidden; }
+.cell.ng { background: var(--red); border-color: var(--red); }
+.cell .cv { position: absolute; left: 6px; right: 6px; top: 13px; height: 22px; line-height: 22px; text-align: center; font-family: var(--f-mono); font-weight: 600; font-size: 20px; color: var(--white); white-space: pre; overflow: hidden; text-overflow: ellipsis; }
+.cell.mid .cv { top: 19px; }
+.cell .cl { position: absolute; left: calc(50% - 10px); top: 41px; transform: translateX(-50%); font-family: var(--f-kr); font-weight: 700; font-size: 12px; line-height: 14px; color: var(--dim); white-space: nowrap; }
+.cell .cmk { position: absolute; left: calc(50% + 13px); top: 41px; width: 14px; height: 14px; color: var(--mint); }
+.cell .cmk .ico { width: 14px; height: 14px; margin: 0; vertical-align: top; }
+.cell.ng .cv, .cell.ng .cl, .cell.ng .cmk { color: var(--ink); }
+.minlabel { position: absolute; width: 88px; height: 24px; line-height: 20px; text-align: center; border-radius: 12px; background: var(--red); border: 2px solid var(--ink);
+  font-family: var(--f-kr); font-weight: 800; font-size: 13px; color: var(--ink); opacity: 0; }
+#band-foot { position: absolute; left: 0; top: 136px; width: 1920px; height: 18px; font-size: 14px; font-weight: 700; color: var(--dim); }
+#foot-inputs { position: absolute; left: 32px; }
+#foot-shrink { position: absolute; left: 1196px; }
+#band-head { position: absolute; left: 32px; top: 160px; width: 1460px; height: 30px; display: flex; align-items: center; gap: 22px; white-space: nowrap; }
+#band-title { font-size: 19px; font-weight: 800; color: var(--white); }
+#band-info { font-family: var(--f-mono); font-size: 16px; color: var(--lav); }
+#band-legend { margin-left: auto; font-size: 15px; font-weight: 600; color: var(--dim); }
+#band-legend b { font-family: var(--f-mono); margin: 0 4px 0 12px; }
+#band-legend .ok { color: var(--mint); }
+#band-legend .ng { color: var(--red); }
+
+/* SVG: 실 */
+.th-dim { fill: none; stroke: var(--kiro); stroke-width: 3; stroke-linecap: round; opacity: 0.5; transition: stroke .35s; }
+.th-dim.pass { stroke: #e9dfff; opacity: 0.8; }
+.th-dim.yellow { stroke: var(--yellow); opacity: 0.9; }
+/* 위반 실: 끝을 자른(butt) 빨간 점선 — 둥근 끝은 6px 틈을 메운다 */
+.th-dim.red { stroke: var(--red); opacity: 1; stroke-linecap: butt; }
+.th-lit { fill: none; stroke: #ffffff; stroke-width: 5; stroke-linecap: round; transition: stroke .35s, opacity .2s; }
+.th-glow { fill: none; stroke: var(--lav); stroke-width: 16; stroke-linecap: round; opacity: 0.28; transition: stroke .35s, opacity .2s; }
+/* 빛 아래에서도 점선·끊긴 틈이 보이게 위반 실의 밝힘 층은 끈다 */
+.th-lit.red, .th-glow.red { opacity: 0; }
+.chk circle { fill: var(--night); stroke: var(--mint); stroke-width: 2.5; }
+.chk path { fill: none; stroke: var(--mint); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.stamp-lead { stroke: var(--red); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 2 5; }
+
+/* SVG: 칩·말풍선·도장·표지판 */
+.chip rect { fill: var(--panel); stroke: var(--lav); stroke-width: 2; }
+.chip .cv { font-family: var(--f-mono); font-weight: 600; font-size: 20px; fill: var(--white); }
+.chip .cl { font-family: var(--f-kr); font-weight: 700; font-size: 12px; fill: var(--dim); }
+/* 칩 안 중립 모양과 결과 모양은 겹쳐 두고 투명도로 바꾼다 */
+.chip .cmk { fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.chip .res.ok rect { stroke: var(--mint); }
+.chip .res.ok .cmk { stroke: var(--mint); }
+.chip .res.ng rect { fill: var(--red); stroke: var(--red); }
+.chip .res.ng .cv, .chip .res.ng .cl { fill: var(--ink); }
+.chip .res.ng .cmk { stroke: var(--ink); }
+.ico { display: inline-block; width: 0.8em; height: 0.8em; vertical-align: -0.04em; margin-right: 0.28em; overflow: visible; }
+.ico path { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.bubble rect, .bubble path { fill: var(--white); stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; }
+.bubble text { font-family: var(--f-hand); font-size: 28px; fill: var(--ink); }
+.stamp rect { fill: #1a0d18; stroke: var(--red); stroke-width: 3; }
+.stamp .s1 { font-family: var(--f-hand); font-size: 22px; fill: var(--red); }
+.stamp .s2 { font-family: var(--f-kr); font-weight: 800; font-size: 21px; fill: var(--white); }
+.stamp .s2 tspan.v { font-family: var(--f-mono); font-weight: 600; }
+/* STOP! 표지판: 빨간 판·먹 글자(대비 5.98) */
+.sign rect.board { fill: var(--red); stroke: var(--ink); stroke-width: 3; }
+.sign rect.stick { fill: #3a2a5c; stroke: var(--ink); stroke-width: 2; }
+.sign text { font-family: var(--f-hand); font-size: 46px; fill: var(--ink); }
+.lamp .body { fill: #2b1f48; stroke: var(--lav); stroke-width: 1.5; }
+.lamp .lens { fill: #fff6d8; }
+.lamp .hand { fill: #f4efff; }
