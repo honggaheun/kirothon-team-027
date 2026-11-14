@@ -1,0 +1,38 @@
+# Implementation Plan
+
+- [ ] 1. 설정과 경로
+  - `--root`(기본 현재 폴더), `.kiro/guard/config.json` 읽기와 기본값(specsDir·testGlobs·sourceGlobs·testDir·timeoutSeconds), glob 규칙(`**/`·`*`·`?`, 대소문자 무시, node_modules·.git·.kiro 제외 — specsDir와 이름을 적은 .kiro/guard 파일은 따로 포함)과 감시 대상 목록, 원자적 쓰기 함수(임시 파일 → 이름 바꾸기, EPERM·EBUSY 재시도), 파일 단위 복사 함수(`copyFileSync`), 로컬 ISO 8601 시각 함수, `HH:MM:SS` 함수
+  - PBT: glob 규칙 — `**/`가 0개 폴더에도 맞고 `*`는 `/`를 넘지 않음
+  - _Requirements: 2.1, 2.3, 2.4, 7.1_
+- [ ] 2. vitest 실행기
+  - `node_modules/vitest/package.json`의 bin을 `process.execPath`로 셸 없이 실행, 태그 정규식 `-t`, JSON 리포터 임시 파일, 종료 코드 무시, `timeoutSeconds` 초과 시 프로세스 트리 종료, `--results` 입력
+  - 단위 테스트: bin 문자열·객체 두 형태, 출력 없음·JSON 아님을 실패로 구분
+  - _Requirements: 1.1, 1.2, 1.3, 1.4_
+- [ ] 3. 판정 파이프라인과 report.json
+  - scan(guard-core) → index.json, 실행 → judge(guard-core), generatedAt·inputsHash·code를 붙여 원자적 교체, 실행 실패는 run-failed 보고서·`runError`, 색인 실패·봉인된 요구사항 없음·판정 중 예외는 직전 index.json으로 같은 보고서(직전 색인이 없으면 종료 코드 1·출력 그대로)
+  - _Requirements: 1.3, 2.1, 2.2, 2.3_
+- [ ] 4. code 추출
+  - 파일 모으기(`sourceGlobs`, `.test.`·`.spec.`·node_modules 제외), 줄마다 태그 해석, 주 파일 선택과 `file` 표기, 빈 경우 `{ "file": null, "lines": [] }`
+  - PBT: 줄 번호 1부터, 해석 안 되는 태그 줄 제외, `\r\n`과 `\n` 결과 동일
+  - _Requirements: 2.4, 2.5_
+- [ ] 5. 반례 기록 runs
+  - 색 코드 제거, 실행 요약 해석(깊이·√×·바깥 대괄호), inputs·shrinkPath, `runs/<spec>__<Rn.m>.json` 쓰기(guard-core 이름 함수), 해당 없는 파일 지우기
+  - PBT: 임의 줄이기 트리 → 문자열 → 해석 = 원래 트리
+  - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
+- [ ] 6. 봉인 검사
+  - sealed.json 읽기(없음 = 봉인 없음, JSON 아님 = 종료 코드 1·`unreadable`), missing → changed → not-run, gen-hashes(낡은 값 우선)
+  - _Requirements: 4.1, 4.2, 4.3, 4.4_
+- [ ] 7. events·알림·해결 닫기
+  - 검사 줄(`guard check · 빨강 r · 노랑 y · 초록 g`, 실행 실패 줄), 해결 닫힘 줄, 직전 report와 비교한 stderr 전환 알림(종료 코드 0), approved → closed 이동(closedAt)
+  - _Requirements: 5.1, 5.2, 5.3, 6.1, 6.2, 6.3_
+- [ ] 8. --if-changed와 --summary
+  - inputsHash 계산(감시 대상: specsDir·testGlobs·sourceGlobs·vitest 설정·sealed·config, 코드포인트 정렬), 같으면 아무것도 쓰지 않고 0, 요약 한 줄 틀(design)
+  - PBT: 감시 파일 한 바이트 변경 → 다른 해시, 감시 밖 변경 → 같은 해시
+  - _Requirements: 7.1, 7.2, 7.3, 8.1, 8.2_
+- [ ] 9. 동시 실행 잠금
+  - `check.lock` 배타 생성·대기(최대 60초)·오래된 lock(120초) 제거, `adopt.lock`이 있으면 check는 `adopt in progress`로 0
+  - _Requirements: 9.7_
+- [ ] 10. adopt
+  - `adopt <요구사항> --test <파일> --mutant <파일> …`(인자 누락 64), `adopt.lock`, 남은 `mutant-backup/` 되돌리기, 원본에서 검사 파일 통과·태그가 모두 그 요구사항인지 확인, 변형 파일 검증(형식·requirement 일치·`find` 정확히 한 번), 변형마다 바꿔 쓰기 → 실행 → finally 복원·해시 확인, sealed.json 갱신·events `human` 줄·stdout 한 줄·check 1회
+  - 단위 테스트: 복원 실패 없이 원본 바이트가 같은지, 살아남은 변형이 있으면 sealed.json 그대로
+  - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5, 9.6_

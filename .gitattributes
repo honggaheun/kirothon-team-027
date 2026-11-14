@@ -1,0 +1,5 @@
+# Sealed checks are hashed byte for byte, so a checkout must not change line endings.
+* -text
+# The power carries a build copy of guard/dist and ui/; keep it out of GitHub language stats.
+power/tripwire/skills/setup/scripts/guard/** linguist-generated=true
+app/.kiro/guard/bin/** linguist-generated=true

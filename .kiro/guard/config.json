@@ -1,0 +1,7 @@
+{
+  "specsDir": ".kiro/specs",
+  "testGlobs": ["guard/test/**/*.test.ts"],
+  "sourceGlobs": ["guard/src/**/*.ts"],
+  "testDir": ".",
+  "timeoutSeconds": 50
+}

@@ -1,0 +1,11 @@
+{
+  "version": "v1",
+  "hooks": [
+    { "name": "tripwire-gate-write", "trigger": "PreToolUse", "matcher": "write", "action": { "type": "command", "command": "node ../guard/dist/cli.js gate" }, "timeout": 10 },
+    { "name": "tripwire-gate-shell", "trigger": "PreToolUse", "matcher": "shell", "action": { "type": "command", "command": "node ../guard/dist/cli.js gate" }, "timeout": 10 },
+    { "name": "tripwire-check-write", "trigger": "PostToolUse", "matcher": "write", "action": { "type": "command", "command": "node ../guard/dist/cli.js check" }, "timeout": 60 },
+    { "name": "tripwire-check-shell", "trigger": "PostToolUse", "matcher": "shell", "action": { "type": "command", "command": "node ../guard/dist/cli.js check --if-changed" }, "timeout": 60 },
+    { "name": "tripwire-gate-task", "trigger": "PreTaskExec", "action": { "type": "command", "command": "node ../guard/dist/cli.js gate" }, "timeout": 10 },
+    { "name": "tripwire-session-summary", "trigger": "SessionStart", "action": { "type": "command", "command": "node ../guard/dist/cli.js check --if-changed --summary" }, "timeout": 60 }
+  ]
+}
