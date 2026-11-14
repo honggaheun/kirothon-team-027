@@ -4,7 +4,7 @@
   - 하위 명령 분기(scan·judge·gate, 나머지는 자리만 — 하위 명령은 항상 첫 인자), 사용법 오류 종료 코드 64, JSON 입력·stdin의 BOM 떼기 공통 함수, 정규화(경로·명령) 공통 함수
   - 빌드 설정(`npx tsc` → `guard/dist/`)과 dist의 모듈 형식 `package.json`(tsconfig 출력 형식과 같게 — ESM이면 `{"type": "module"}`, 다시 빌드해도 남게). dist는 Node 내장 모듈과 dist 안의 상대 import만 쓴다 — 파워에 넣어 다른 저장소로 복사해도 돌아야 한다
   - _Requirements: 1.1, 2.1, 3.1_
-- [ ] 2. scan 구현과 테스트
+- [x] 2. scan 구현과 테스트
   - 단위 테스트 + PBT(ID 개수 = 수용 기준 개수, 중복 없음, basis는 마지막 `(근거:`부터 문장 끝까지가 괄호 묶음 하나일 때만 — 문장 중간의 `(근거:` 언급은 basis 없음, 근거 안의 짝 맞는 괄호는 유지, textHash는 근거를 포함한 text의 해시), 중복 ID 종료 코드 1
   - _Requirements: 1.1, 1.2, 1.3, 1.4_
 - [x] 3. judge 구현과 테스트

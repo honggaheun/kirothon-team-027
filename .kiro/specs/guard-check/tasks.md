@@ -29,7 +29,7 @@
   - inputsHash 계산(감시 대상: specsDir·testGlobs·sourceGlobs·vitest 설정·sealed·config, 코드포인트 정렬), 같으면 아무것도 쓰지 않고 0, 요약 한 줄 틀(design)
   - PBT: 감시 파일 한 바이트 변경 → 다른 해시, 감시 밖 변경 → 같은 해시
   - _Requirements: 7.1, 7.2, 7.3, 8.1, 8.2_
-- [ ] 9. 동시 실행 잠금
+- [x] 9. 동시 실행 잠금
   - `check.lock` 배타 생성·대기(최대 60초)·오래된 lock(120초) 제거, `adopt.lock`이 있으면 check는 `adopt in progress`로 0
   - _Requirements: 9.7_
 - [x] 10. adopt

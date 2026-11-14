@@ -1,6 +1,7 @@
 // Tests for scan (task 2).
+import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -57,6 +58,29 @@ describe('scan', () => {
       writeFileSync(path.join(dir, 's1', 'requirements.md'), '### Requirement 1\n#### Acceptance Criteria\n1. a\n### Requirement 1\n#### Acceptance Criteria\n1. b\n');
       expect(() => scanSpecs(dir)).toThrow(DuplicateIdError);
       expect(() => scanSpecs(dir)).toThrow(/R1\.1/);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it('[guard-core:R1.3] guard scan exits 1 on duplicate IDs, names the ID and writes no output', () => {
+    const cli = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'dist', 'cli.js');
+    const dir = mkdtempSync(path.join(tmpdir(), 'guard-scan-cli-'));
+    try {
+      mkdirSync(path.join(dir, 's1'));
+      writeFileSync(path.join(dir, 's1', 'requirements.md'), '### Requirement 1\n#### Acceptance Criteria\n1. a\n### Requirement 1\n#### Acceptance Criteria\n1. b\n');
+      const out = path.join(dir, 'index.json');
+      const dup = spawnSync(process.execPath, [cli, 'scan', '--specs', dir, '--out', out], { input: '', encoding: 'utf8' });
+      expect(dup.status).toBe(1);
+      expect(dup.stderr).toMatch(/s1/);
+      expect(dup.stderr).toMatch(/R1\.1/);
+      expect(existsSync(out)).toBe(false);
+
+      // the same CLI exits 0 once the duplicate is gone
+      writeFileSync(path.join(dir, 's1', 'requirements.md'), '### Requirement 1\n#### Acceptance Criteria\n1. a\n2. b\n');
+      const ok = spawnSync(process.execPath, [cli, 'scan', '--specs', dir, '--out', out], { input: '', encoding: 'utf8' });
+      expect(ok.status).toBe(0);
+      expect(existsSync(out)).toBe(true);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

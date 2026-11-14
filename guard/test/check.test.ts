@@ -1,10 +1,10 @@
 // Tests for the check pipeline: report, seals, events, resolutions, if-changed, summary, locks (tasks 3, 6-9).
 import fc from 'fast-check';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { runCheck } from '../src/check.js';
 
 const SPEC = `# Requirements Document
@@ -354,5 +354,75 @@ describe('locks', () => {
     put('results.json', 'bad');
     await check();
     expect(existsSync(join(root, '.kiro/guard/check.lock'))).toBe(false);
+  });
+
+  describe('waiting on check.lock (fake clock)', () => {
+    const LOCK = '.kiro/guard/check.lock';
+    const lockPath = (): string => join(root, ...LOCK.split('/'));
+    /** Make the lock file look `sec` seconds old. */
+    const age = (sec: number): void => {
+      const t = (Date.now() - sec * 1000) / 1000;
+      utimesSync(lockPath(), t, t);
+    };
+    /** Resolves to 'pending' while the promise has not settled. */
+    const state = async (p: Promise<unknown>): Promise<string> =>
+      Promise.race([p.then(() => 'done', () => 'failed'), Promise.resolve('pending')]);
+
+    beforeEach(() => {
+      vi.useFakeTimers({ toFake: ['Date', 'setTimeout'] });
+    });
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('[guard-check:R9.7] a fresh lock is retried until it is released, then check runs', async () => {
+      allPass();
+      put(LOCK, '');
+      const p = check();
+      await vi.advanceTimersByTimeAsync(10_000);
+      expect(await state(p)).toBe('pending');
+      expect(existsSync(join(root, '.kiro/guard/report.json'))).toBe(false);
+      rmSync(lockPath());
+      await vi.advanceTimersByTimeAsync(400);
+      expect((await p).code).toBe(0);
+      expect(json('.kiro/guard/report.json').overall).toBe('green');
+      expect(existsSync(lockPath())).toBe(false);
+    });
+
+    it('[guard-check:R9.7] still waiting at 60s, fails after 60s and leaves the other holder\'s lock', async () => {
+      allPass();
+      put(LOCK, '');
+      const p = check();
+      const failure = expect(p).rejects.toThrow(/check\.lock/);
+      await vi.advanceTimersByTimeAsync(59_000);
+      expect(await state(p)).toBe('pending');
+      await vi.advanceTimersByTimeAsync(2_000);
+      await failure;
+      expect(existsSync(lockPath())).toBe(true);
+      expect(existsSync(join(root, '.kiro/guard/report.json'))).toBe(false);
+    });
+
+    it('[guard-check:R9.7] a lock older than 120s is removed at once and check runs', async () => {
+      allPass();
+      put(LOCK, '');
+      age(121);
+      const r = await check();
+      expect(r.code).toBe(0);
+      expect(json('.kiro/guard/report.json').overall).toBe('green');
+      expect(existsSync(lockPath())).toBe(false);
+    });
+
+    it('[guard-check:R9.7] a lock younger than 120s is kept until it turns 120s old', async () => {
+      allPass();
+      put(LOCK, '');
+      age(100);
+      const p = check();
+      await vi.advanceTimersByTimeAsync(10_000); // lock is now ~110s old
+      expect(await state(p)).toBe('pending');
+      expect(existsSync(lockPath())).toBe(true);
+      await vi.advanceTimersByTimeAsync(11_000); // ~121s old: removed, check runs
+      expect((await p).code).toBe(0);
+      expect(existsSync(lockPath())).toBe(false);
+    });
   });
 });
